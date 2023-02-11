@@ -1,0 +1,77 @@
+  <!DOCTYPE html>
+  <html>
+    <head>
+      <!--Import Google Icon Font-->
+      <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+      <!--Import materialize.css-->
+      <link type="text/css" rel="stylesheet" href="css/materialize.min.css"  media="screen,projection"/>
+
+      <!--Let browser know website is optimized for mobile-->
+      <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    </head>
+
+    <body>
+  <div class="section no-pad-bot" id="index-banner">
+    <div class="container">
+      <br><br>
+      <h1 class="header center orange-text">BOSv2</h1>
+      <div class="row center">
+          <div class="input-field col s12">
+            <select id="desa">
+              <option selected value="penidon">Penidon</option>
+              <option value="sembungrejo">Sembungrejo</option>
+              <option value="kesamben">Kesamben</option>
+              <option value="cangkring">Cangkring</option>
+            </select>
+            <label>Desa</label>
+          </div>
+          <div class="input-field col s12">
+            <input type="text" class="datepicker" id="tanggal">
+            <label>Tanggal</label>
+          </div>
+        <div class="input-field col s6">
+          <input disabled id="hari" type="text" class="validate">
+          <label for="hari">Hari</label>
+        </div>
+        <div class="input-field col s6">
+          <input disabled id="pukul" type="text" class="validate">
+          <label for="pukul">Pukul</label>
+        </div>
+        <div class="input-field col s12">
+          <input id="nama" type="text" class="validate">
+          <label for="nama">Nama</label>
+        </div>
+        <div class="input-field col s4">
+          <input value="-" id="dusun" type="text" class="validate">
+          <label for="dusun">Dusun</label>
+        </div>
+        <div class="input-field col s4">
+          <input value="-" id="rt" type="text" class="validate">
+          <label for="rt">RT</label>
+        </div>
+        <div class="input-field col s4">
+          <input value="-" id="rw" type="text" class="validate">
+          <label for="rw">RW</label>
+        </div>
+        <div class="input-field col s12">
+          <textarea id="uraian" class="materialize-textarea validate"></textarea>
+          <!-- <label for="uraian">Uraian</label> -->
+        </div>
+        
+      </div>
+      <div class="row center">
+        <button id="ganti" class="btn-large waves-effect waves-light orange">GANTI</button>
+      </div>
+      <br><br>
+
+    </div>
+  </div>
+
+
+
+
+      <!--JavaScript at end of body for optimized loading-->
+      <script type="text/javascript" src="js/jquery-2.1.1.min.js"></script>
+      <script type="text/javascript" src="js/materialize.min.js"></script> 
+      <script type="text/javascript" src="js/init.js"></script>     
+  </html>
