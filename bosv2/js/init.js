@@ -52,7 +52,7 @@ function ganti(){
 	let rt 			= desa_rand[2];
 	let d 			= new Date(tanggal);
 	let hari 		= seminggu[d.getDay()];
-	let uraian		= "Pada hari " + hari + " (" + d.toLocaleDateString("id") + ") Pukul " + pukul + " WIB saya bertemu dengan Bpk. " + toProperCase(random_nama)+ " di Ds. " + toProperCase(desa_val) + " Kec. Plumpang.\n\nBpk. " + random_nama + " " + random_kata;
+	let uraian		= "Pada hari " + hari + " (" + d.toLocaleDateString("id") + ") Pukul " + pukul + " WIB saya bertemu dengan Bpk. " + toProperCase(random_nama) + " di Ds. " + toProperCase(desa_val) + " Kec. Plumpang.\n\nBpk. " + toProperCase(random_nama) + " " + random_kata;
 
 	// set value
 	$('#nama').val(random_nama);
