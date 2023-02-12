@@ -44,7 +44,7 @@ function ganti(){
 	let random_nama = nama[Math.floor(Math.random()*nama.length)];
 	let random_kata	= kata[Math.floor(Math.random()*kata.length)].toLowerCase();
 	let tanggal		= $("#tanggal").val();
-	let pukul		= generateRandom(1,16) + "." + generateRandom(0,59)
+	let pukul		= generateRandom(8,16) + "." + generateRandom(0,59)
 	let desa_val	= $("#desa").val();
 	let desa_rand	= desa[desa_val][Math.floor(Math.random()*desa[desa_val].length)]
 	let dusun		= desa_rand[0];
