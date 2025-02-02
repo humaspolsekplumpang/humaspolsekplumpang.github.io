@@ -1,0 +1,146 @@
+  <!DOCTYPE html>
+  <html>
+    <head>
+      <!--Import Google Icon Font-->
+      <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+      <!--Import materialize.css-->
+      <link type="text/css" rel="stylesheet" href="css/materialize.min.css"  media="screen,projection"/>
+
+      <!--Let browser know website is optimized for mobile-->
+      <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    </head>
+
+    <body>
+  <div class="section no-pad-bot" id="index-banner">
+    <div class="container">
+      <br><br>
+      <h1 class="header center orange-text">BERITA</h1>
+      <div class="row center">
+          <div class="input-field col s12">
+            <select id="jenis_berita">
+              <option selected value="indomaret">Indomaret</option>
+              <option value="gaturpagi">Gatur Lalin Pagi</option>
+              <option value="bri">BRI</option>
+              <option value="pasar">Pasar</option>
+              <option value="tokoemas">Toko Emas</option>
+              <option value="spbu">SPBU</option>
+              <option value="dialogis">Dialogis</option>
+              <option value="kringserse">Kring Serse</option>
+              <option value="pantausembako">Pantau sembako</option>
+              <option value="judionline">Judi Online</option>
+              <option value="patrolipemukiman">Patroli Pemukiman</option>
+              <option value="karhutla">Karhutla</option>
+              <option value="patrolipemukiman">Patroli Pemukiman</option>
+              <option value="patrolibluelight">Patroli Blue Light</option>
+            </select>
+            <label>jenis_berita</label>
+          </div>
+          <div class="input-field col s12">
+            <input type="text" class="datepicker" id="tanggal">
+            <label>Tanggal</label>
+          </div>
+        <div class="input-field col s12">
+            <input type="text" id="judul" value="Judul" class="validate">
+          <label for="judul">Judul</label>
+        </div>
+        <div class="input-field col s12">
+          <textarea id="uraian" style="min-height:200px;" class="materialize-textarea validate" rows="10">Uraian</textarea>
+          <label for="uraian">Uraian</label>
+        </div>
+        
+      </div>
+      <div class="row center">
+        <button id="ganti" class="btn-large waves-effect waves-light orange">GANTI</button>
+      </div>
+      <br><br>
+
+    </div>
+  </div>
+
+
+
+
+      <!--JavaScript at end of body for optimized loading-->
+
+      <script type="text/javascript" src="js/jquery-2.1.1.min.js"></script>
+      <script type="text/javascript" src="js/materialize.min.js"></script> 
+
+<script type="text/javascript">
+$(document).ready(function(){
+    $('#tanggal').datepicker({
+      format    : "dd mmmm yyyy",
+      setDefaultDate : true,
+      // defaultDate : new Date(),
+      autoClose   : true,
+    });
+    $('select').formSelect();
+  M.textareaAutoResize($('#uraian'));
+});
+
+$('.validate').click(function(){
+  $(this).select();
+  navigator.clipboard.writeText($(this).val());
+  // $(this).val("");
+});
+
+
+
+const seminggu  = ["Minggu", "Senin", "Selasa", "Rabu", "Kamis", "Jum'at", "Sabtu"];
+
+
+
+function ganti_() {
+        jQuery.get('txt/' + $("#jenis_berita").val() + '.txt', function(data) {
+            let datas         = data.split("=====");
+            let narasi        = datas[Math.floor(Math.random()*datas.length)].trim();
+            let judul_berita  = narasi.split("=x=")[0].trim();
+            let isi_berita    = narasi.split("=x=")[1].trim();
+
+              let tanggal     = $("#tanggal").val();
+              let d           = new Date(tanggal);
+              let hari        = seminggu[d.getDay()];
+              let pukul       = generateRandom(8,16) + "." + generateRandom(0,59)
+              let berita      = "Polsek Plumpang Polres Tuban - Pada hari " + hari + " (" + d.toLocaleDateString("id") + ") Pukul " + pukul + ", " + isi_berita;
+              $("#judul").val(hari + " (" + d.toLocaleDateString("id") + "), " + judul_berita);
+              $("#uraian").val(berita);
+        });
+}
+
+function generateRandom(min, max) {
+
+    // find diff
+    let difference = max - min;
+
+    // generate random number 
+    let rand = Math.random();
+
+    // multiply with difference 
+    rand = Math.floor( rand * difference);
+
+    // add with min value 
+    rand = rand + min;
+
+    return rand > 9 ? "" + rand: "0" + rand;
+}
+
+function toProperCase(val) {
+  return val.replace(/\w\S*/g, function(txt){return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();});
+}
+
+$("#tanggal").val(new Date());
+$('#tanggal').change(function(){
+  ganti_();
+});
+
+$('#jenis_berita').change(function(){
+  ganti_();
+});
+
+$('#ganti').click(function(){
+  ganti_();
+});
+      </script>
+
+            <!-- <script type="text/javascript" src="js/init.js"></script>      -->
+
+  </html>
