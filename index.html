@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>App Polsek Plumpang</title>
+    <title>Materialize CSS Example</title>
     <!-- Import Materialize CSS -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
 </head>
@@ -12,10 +12,25 @@
     
     <div class="row">
         <div class="col s12">
+            <input type="password" id="password" placeholder="Masukkan password" class="input-field">
+            <button onclick="checkPassword()" class="waves-effect waves-light btn green">Submit</button>
+        </div>
+        <div class="col s12" id="links" style="display: none;">
             <a href="/bosv2" class="waves-effect waves-light btn blue">BOSv2</a>
             <a href="/berita" class="waves-effect waves-light btn red">Berita</a>
         </div>
     </div>
+    
+    <script>
+        function checkPassword() {
+            var password = document.getElementById('password').value;
+            if (password === 'plumpang86') {
+                document.getElementById('links').style.display = 'block';
+            } else {
+                alert('Password salah!');
+            }
+        }
+    </script>
     
     <!-- Import Materialize JS -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
