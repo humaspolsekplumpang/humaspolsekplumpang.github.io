@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Materialize CSS Example</title>
+    <title>Apps</title>
     <!-- Import Materialize CSS -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
 </head>
@@ -15,18 +15,28 @@
             <input type="password" id="password" placeholder="Masukkan password" class="input-field">
             <button onclick="checkPassword()" class="waves-effect waves-light btn green">Submit</button>
         </div>
-        <div class="col s12" id="links" style="display: none;">
-            <a href="/bosv2" class="waves-effect waves-light btn blue">BOSv2</a>
-            <a href="/berita" class="waves-effect waves-light btn red">Berita</a>
+    </div>
+    
+    <div class="row" id="appContainer" style="display: none;">
+        <div class="col s12">
+            <div class="card">
+                <div class="card-content">
+                    <span class="card-title">Silahkan pilih aplikasi yang diinginkan</span>
+                </div>
+                <div class="card-action">
+                    <a href="/bosv2" target="_blank" class="waves-effect waves-light btn blue">BOSv2</a>
+                    <a href="/berita" target="_blank" class="waves-effect waves-light btn red">Berita</a>
+                </div>
+            </div>
         </div>
     </div>
     
     <script>
         function checkPassword() {
             var password = document.getElementById('password').value;
-            var encryptedPassword = "cGx1bXBhbmc4Ng==";
+            var encryptedPassword = "cGx1bXBhbmc4Ng=="; // Base64 encoded password "plumpang86"
             if (btoa(password) === encryptedPassword) {
-                document.getElementById('links').style.display = 'block';
+                document.getElementById('appContainer').style.display = 'block';
             } else {
                 alert('Password salah!');
             }
