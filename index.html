@@ -8,7 +8,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
 </head>
 <body class="container center-align">
-    <h4>Silahkan pilih yang diperlukan</h4>
+    <h4>Masukkan password untuk membuka Aplikasi</h4>
     
     <div class="row">
         <div class="col s12">
@@ -24,7 +24,8 @@
     <script>
         function checkPassword() {
             var password = document.getElementById('password').value;
-            if (password === 'plumpang86') {
+            var encryptedPassword = "cGx1bXBhbmc4Ng==";
+            if (btoa(password) === encryptedPassword) {
                 document.getElementById('links').style.display = 'block';
             } else {
                 alert('Password salah!');
