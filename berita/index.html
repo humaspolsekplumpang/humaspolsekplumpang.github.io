@@ -97,7 +97,7 @@ function ganti_() {
               let d           = new Date(tanggal);
               let hari        = seminggu[d.getDay()];
               let pukul       = generateRandom(8,16) + "." + generateRandom(0,59)
-              let berita      = "Polsek Plumpang Polres Tuban - Pada hari " + hari + " (" + d.toLocaleDateString("id") + ") Pukul " + pukul + ", " + isi_berita;
+              let berita      = "Polsek Plumpang Polres Tuban - Pada hari " + hari + " (" + d.toLocaleDateString("id") + "), " + isi_berita;
               $("#judul").val(judul_berita);
               $("#uraian").val(berita);
         });
