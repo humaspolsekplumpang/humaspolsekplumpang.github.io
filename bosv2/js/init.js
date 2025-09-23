@@ -43,6 +43,7 @@ desa["plandirejo"]	= [["Dusun Plandi","1","1"],["Dusun Plandi","1","2"],["Dusun 
 desa["klotok"]		= [["Dusun Klotok","1","1"]];
 desa["plumpang"]	= [["Dusun Kunir","1","1"],["Dusun Plumpang","1","1"],["Dusun Tanggungan","1","1"]];
 desa["ngrayung"]	= [["Dusun Ngrayung","1","1"],["Dusun Ngrayung","1","2"],["Dusun Ngrayung","1","3"],["Dusun Ngrayung","1","4"],["Dusun Ngrayung","1","5"],["Dusun Ngrayung","1","6"],["Dusun Ngrayung","1","7"],["Dusun Ngrayung","1","8"],["Dusun Ngrayung","1","9"],["Dusun Ngrayung","1","10"],["Dusun Ngrayung","1","11"],["Dusun Ngrayung","1","12"],["Dusun Ngrayung","1","13"],["Dusun Ngrayung","1","14"]];
+desa["trutup"]		= [["Dusun Talun","1","1"],["Dusun Talun","1","2"],["Dusun Talun","1","3"],["Dusun Talun","2","1"],["Dusun Ngrayung","2","2"],["Dusun Talun","2","3"],["Dusun Talun","3","1"],["Dusun Talun","3","2"],["Dusun Talun","3","3"],["Dusun Klaseman","4","1"],["Dusun Klaseman","4","2"],["Dusun Klaseman","4","3"],["Dusun Klaseman","5","1"],["Dusun Klaseman","5","2"],["Dusun Klaseman","5","3"],["Dusun Klaseman","6","1"],["Dusun Klaseman","6","2"],["Dusun Klaseman","6","3"]];
 
 $("#tanggal").val(new Date());
 ganti();
