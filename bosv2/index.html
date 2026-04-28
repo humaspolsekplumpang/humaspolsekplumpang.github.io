@@ -1,85 +1,590 @@
-  <!DOCTYPE html>
-  <html>
-    <head>
-      <!--Import Google Icon Font-->
-      <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-      <!--Import materialize.css-->
-      <link type="text/css" rel="stylesheet" href="css/materialize.min.css"  media="screen,projection"/>
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+  <title>BOSv2 — Buku Operasional Satuan</title>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
-      <!--Let browser know website is optimized for mobile-->
-      <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-    </head>
+    :root {
+      --bg: #0f1117;
+      --surface: #181c27;
+      --surface2: #1e2333;
+      --border: rgba(255,255,255,0.07);
+      --accent: #f97316;
+      --accent2: #fb923c;
+      --accent-glow: rgba(249,115,22,0.18);
+      --text: #f1f3f9;
+      --text-muted: #8892a4;
+      --text-dim: #4b5568;
+      --green: #22c55e;
+      --blue: #60a5fa;
+      --radius: 14px;
+      --radius-sm: 8px;
+    }
 
-    <body>
-  <div class="section no-pad-bot" id="index-banner">
-    <div class="container">
-      <br><br>
-      <h1 class="header center orange-text">BOSv2</h1>
-      <div class="row center">
-          <div class="input-field col s12">
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      min-height: 100vh;
+      padding: 0 0 60px;
+    }
+
+    /* ── HEADER ── */
+    .header {
+      background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+      padding: 28px 20px 32px;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+    .header::before {
+      content: '';
+      position: absolute;
+      top: -40px; right: -40px;
+      width: 180px; height: 180px;
+      background: radial-gradient(circle, var(--accent-glow) 0%, transparent 70%);
+      border-radius: 50%;
+    }
+    .header::after {
+      content: '';
+      position: absolute;
+      bottom: -30px; left: -30px;
+      width: 140px; height: 140px;
+      background: radial-gradient(circle, rgba(96,165,250,0.1) 0%, transparent 70%);
+      border-radius: 50%;
+    }
+    .header-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: rgba(249,115,22,0.15);
+      border: 1px solid rgba(249,115,22,0.3);
+      color: var(--accent2);
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      padding: 4px 12px;
+      border-radius: 20px;
+      margin-bottom: 12px;
+    }
+    .header h1 {
+      font-size: 36px;
+      font-weight: 800;
+      color: #fff;
+      letter-spacing: -1px;
+      position: relative;
+    }
+    .header h1 span { color: var(--accent); }
+    .header-sub {
+      color: var(--text-muted);
+      font-size: 13px;
+      margin-top: 6px;
+      font-weight: 500;
+    }
+
+    /* ── MAIN CONTAINER ── */
+    .container {
+      max-width: 600px;
+      margin: 0 auto;
+      padding: 0 16px;
+    }
+
+    /* ── CARD ── */
+    .card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      margin-top: 16px;
+      overflow: hidden;
+    }
+    .card-header {
+      padding: 16px 20px 14px;
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .card-icon {
+      width: 32px; height: 32px;
+      background: var(--accent-glow);
+      border-radius: var(--radius-sm);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 16px;
+    }
+    .card-title {
+      font-size: 13px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.8px;
+      color: var(--text-muted);
+    }
+    .card-body { padding: 20px; }
+
+    /* ── FORM FIELDS ── */
+    .field { margin-bottom: 16px; }
+    .field:last-child { margin-bottom: 0; }
+    
+    label {
+      display: block;
+      font-size: 12px;
+      font-weight: 700;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.6px;
+      margin-bottom: 7px;
+    }
+
+    select, input, textarea {
+      width: 100%;
+      background: var(--surface2);
+      border: 1.5px solid var(--border);
+      color: var(--text);
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-size: 15px;
+      font-weight: 500;
+      padding: 12px 14px;
+      border-radius: var(--radius-sm);
+      outline: none;
+      transition: border-color 0.2s, box-shadow 0.2s;
+      -webkit-appearance: none;
+    }
+    select:focus, input:focus, textarea:focus {
+      border-color: var(--accent);
+      box-shadow: 0 0 0 3px var(--accent-glow);
+    }
+    select option { background: #1e2333; }
+
+    /* Custom select arrow */
+    .select-wrap { position: relative; }
+    .select-wrap::after {
+      content: '▾';
+      position: absolute;
+      right: 14px; top: 50%;
+      transform: translateY(-50%);
+      color: var(--text-muted);
+      pointer-events: none;
+      font-size: 14px;
+    }
+
+    /* ── ROW GRID ── */
+    .row2 { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+    .row3 { display: grid; grid-template-columns: 2fr 1fr 1fr; gap: 10px; }
+
+    /* ── READONLY / GENERATED FIELDS ── */
+    .field-generated input, .field-generated textarea {
+      background: var(--bg);
+      border-color: rgba(34,197,94,0.2);
+      color: var(--green);
+      cursor: pointer;
+      position: relative;
+    }
+    .field-generated textarea {
+      min-height: 160px;
+      resize: none;
+      line-height: 1.6;
+      font-size: 14px;
+    }
+    .copy-hint {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 11px;
+      color: var(--text-dim);
+      margin-top: 6px;
+    }
+    .copy-hint svg { flex-shrink: 0; }
+
+    /* ── GENERATED INFO GRID ── */
+    .info-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+    }
+    .info-item {
+      background: var(--bg);
+      border: 1.5px solid rgba(34,197,94,0.15);
+      border-radius: var(--radius-sm);
+      padding: 10px 14px;
+      cursor: pointer;
+      transition: border-color 0.2s, background 0.2s;
+      position: relative;
+    }
+    .info-item:hover {
+      border-color: rgba(34,197,94,0.4);
+      background: rgba(34,197,94,0.05);
+    }
+    .info-item:active { transform: scale(0.98); }
+    .info-label {
+      font-size: 10px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.6px;
+      color: var(--text-dim);
+      margin-bottom: 4px;
+    }
+    .info-value {
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--green);
+      font-family: 'JetBrains Mono', monospace;
+    }
+    .info-item .copied-tag {
+      position: absolute;
+      top: 6px; right: 8px;
+      font-size: 9px;
+      font-weight: 700;
+      color: var(--green);
+      opacity: 0;
+      transition: opacity 0.3s;
+    }
+    .info-item.copied .copied-tag { opacity: 1; }
+
+    /* ── URAIAN ── */
+    .uraian-box {
+      background: var(--bg);
+      border: 1.5px solid rgba(34,197,94,0.2);
+      border-radius: var(--radius-sm);
+      padding: 14px;
+      cursor: pointer;
+      transition: border-color 0.2s;
+      position: relative;
+    }
+    .uraian-box:hover { border-color: rgba(34,197,94,0.4); }
+    .uraian-text {
+      font-size: 14px;
+      line-height: 1.7;
+      color: var(--green);
+      white-space: pre-wrap;
+      word-break: break-word;
+    }
+    .uraian-copy-btn {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      margin-top: 10px;
+      font-size: 11px;
+      font-weight: 600;
+      color: var(--accent);
+      background: rgba(249,115,22,0.1);
+      border: 1px solid rgba(249,115,22,0.2);
+      padding: 6px 12px;
+      border-radius: 6px;
+      cursor: pointer;
+      width: fit-content;
+      transition: background 0.2s;
+    }
+    .uraian-copy-btn:hover { background: rgba(249,115,22,0.2); }
+
+    /* ── MAIN BUTTON ── */
+    .btn-generate {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      width: 100%;
+      padding: 18px;
+      background: linear-gradient(135deg, var(--accent) 0%, #ea580c 100%);
+      color: #fff;
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-size: 16px;
+      font-weight: 800;
+      letter-spacing: 0.5px;
+      border: none;
+      border-radius: var(--radius);
+      cursor: pointer;
+      margin-top: 16px;
+      box-shadow: 0 4px 24px rgba(249,115,22,0.35);
+      transition: transform 0.15s, box-shadow 0.15s;
+      -webkit-tap-highlight-color: transparent;
+    }
+    .btn-generate:hover {
+      box-shadow: 0 6px 32px rgba(249,115,22,0.5);
+    }
+    .btn-generate:active {
+      transform: scale(0.97);
+      box-shadow: 0 2px 12px rgba(249,115,22,0.3);
+    }
+    .btn-icon {
+      width: 24px; height: 24px;
+      background: rgba(255,255,255,0.2);
+      border-radius: 6px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 14px;
+    }
+
+    /* ── TOAST ── */
+    #toast {
+      position: fixed;
+      bottom: 24px; left: 50%;
+      transform: translateX(-50%) translateY(80px);
+      background: var(--green);
+      color: #fff;
+      font-size: 13px;
+      font-weight: 700;
+      padding: 10px 20px;
+      border-radius: 30px;
+      z-index: 9999;
+      transition: transform 0.3s cubic-bezier(0.34,1.56,0.64,1);
+      white-space: nowrap;
+      box-shadow: 0 4px 20px rgba(34,197,94,0.4);
+    }
+    #toast.show { transform: translateX(-50%) translateY(0); }
+
+    /* ── FOOTER ── */
+    .footer {
+      text-align: center;
+      padding: 32px 20px 0;
+      font-size: 12px;
+      color: var(--text-dim);
+    }
+
+    /* ── MOBILE TWEAKS ── */
+    @media (max-width: 400px) {
+      .header h1 { font-size: 30px; }
+      .row3 { grid-template-columns: 1fr 1fr; }
+      .row3 .field:first-child { grid-column: 1 / -1; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- HEADER -->
+  <div class="header">
+    <div class="header-badge">⚡ Generator Laporan</div>
+    <h1>BOS<span>v2</span></h1>
+    <p class="header-sub">Buku Operasional Satuan · Kec. Plumpang</p>
+  </div>
+
+  <div class="container">
+
+    <!-- CARD: INPUT DATA -->
+    <div class="card">
+      <div class="card-header">
+        <div class="card-icon">📋</div>
+        <span class="card-title">Parameter Kunjungan</span>
+      </div>
+      <div class="card-body">
+        
+        <!-- DESA -->
+        <div class="field">
+          <label>Desa</label>
+          <div class="select-wrap">
             <select id="desa">
-              <option selected value="penidon">Penidon</option>
+              <option value="penidon">Penidon</option>
               <option value="trutup">Trutup</option>
               <option value="sembungrejo">Sembungrejo</option>
-              <!-- <option value="kesamben">Kesamben</option> -->
               <option value="cangkring">Cangkring</option>
               <option value="kebomlati">Kebomlati</option>
               <option value="magersari">Magersari</option>
-              <!-- <option value="plandirejo">Plandirejo</option> -->
               <option value="klotok">Klotok</option>
-              <!-- <option value="ngrayung">Ngrayung</option> -->
               <option value="plumpang">Plumpang</option>
             </select>
-            </select>
-            <label>Desa</label>
           </div>
-          <div class="input-field col s12">
-            <input type="text" class="datepicker" id="tanggal">
-            <label>Tanggal</label>
-          </div>
-        <div class="input-field col s6">
-          <input disabled id="hari" type="text" class="validate">
-          <label for="hari">Hari</label>
         </div>
-        <div class="input-field col s6">
-          <input disabled id="pukul" type="text" class="validate">
-          <label for="pukul">Pukul</label>
-        </div>
-        <div class="input-field col s12">
-          <input id="nama" type="text" class="validate">
-          <label for="nama">Nama</label>
-        </div>
-        <div class="input-field col s8">
-          <input value="-" id="dusun" type="text" class="validate">
-          <label for="dusun">Dusun</label>
-        </div>
-        <div class="input-field col s2">
-          <input value="-" id="rt" type="text" class="validate">
-          <label for="rt">RT</label>
-        </div>
-        <div class="input-field col s2">
-          <input value="-" id="rw" type="text" class="validate">
-          <label for="rw">RW</label>
-        </div>
-        <div class="input-field col s12">
-          <textarea style="min-height:200px;" id="uraian" class="materialize-textarea validate"></textarea>
-          <!-- <label for="uraian">Uraian</label> -->
-        </div>
-        
-      </div>
-      <div class="row center">
-        <button id="ganti" class="btn-large waves-effect waves-light orange">GANTI</button>
-      </div>
-      <br><br>
 
+        <!-- TANGGAL -->
+        <div class="field">
+          <label>Tanggal Kunjungan</label>
+          <input type="date" id="tanggal">
+        </div>
+
+        <!-- HARI & PUKUL -->
+        <div class="row2">
+          <div class="field field-generated">
+            <label>Hari</label>
+            <input type="text" id="hari" readonly>
+          </div>
+          <div class="field field-generated">
+            <label>Pukul (WIB)</label>
+            <input type="text" id="pukul" readonly>
+          </div>
+        </div>
+
+      </div>
     </div>
+
+    <!-- CARD: HASIL GENERATE -->
+    <div class="card">
+      <div class="card-header">
+        <div class="card-icon">👤</div>
+        <span class="card-title">Data Warga</span>
+      </div>
+      <div class="card-body">
+
+        <!-- NAMA -->
+        <div class="field field-generated">
+          <label>Nama</label>
+          <input type="text" id="nama" readonly onclick="copyField(this)">
+          <div class="copy-hint">
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/></svg>
+            Klik untuk salin
+          </div>
+        </div>
+
+        <!-- DUSUN, RT, RW -->
+        <div class="row3">
+          <div class="field field-generated">
+            <label>Dusun</label>
+            <input type="text" id="dusun" readonly onclick="copyField(this)">
+          </div>
+          <div class="field field-generated">
+            <label>RT</label>
+            <input type="text" id="rt" readonly onclick="copyField(this)">
+          </div>
+          <div class="field field-generated">
+            <label>RW</label>
+            <input type="text" id="rw" readonly onclick="copyField(this)">
+          </div>
+        </div>
+
+        <!-- INFO GRID: small copy boxes -->
+        <div style="margin-top:4px;">
+          <div class="copy-hint">
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/></svg>
+            Klik kolom untuk menyalin ke clipboard
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- CARD: URAIAN -->
+    <div class="card">
+      <div class="card-header">
+        <div class="card-icon">📝</div>
+        <span class="card-title">Uraian Laporan</span>
+      </div>
+      <div class="card-body">
+        <div class="uraian-box" id="uraian-box" onclick="copyUraian()">
+          <div class="uraian-text" id="uraian-text"></div>
+        </div>
+        <button class="uraian-copy-btn" onclick="copyUraian()">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/></svg>
+          Salin Uraian
+        </button>
+      </div>
+    </div>
+
+    <!-- GENERATE BUTTON -->
+    <button class="btn-generate" id="btn-ganti" onclick="ganti()">
+      <div class="btn-icon">🔀</div>
+      GENERATE ULANG
+    </button>
+
+    <div class="footer">BOSv2 · Kecamatan Plumpang</div>
+
   </div>
 
+  <!-- TOAST -->
+  <div id="toast">✓ Disalin ke clipboard</div>
 
+<script>
+// ═══════════════════════════════════════
+// DATA
+// ═══════════════════════════════════════
+const nama = ["SUGENG","DEDY CANDRA IRAWAN","KUNDONO","FAVIAN IDDO KURNIA PRATAMA","AHNAF NAUFAL DWI CANDRAKANTA","DIMAS FRENDI PRADIPTA","ANGGARA DIVA FAHRIYA","SRINOTO","EKO","SUCIPTO","TITO AVANDI ALVARIZI","TASIMIN","LASDI","GUNAWAN","ISMAIL","ADAM AL FARICKY ISMAIL","SULISTIYO","ABDIL PUTRA AGASTYA","BAGUS ANGGALIH BUDI","BUDIONO","SANDI SEPTIAN PUTRA","BASORI","FAUZAN ZIDAN","AZADIN ALMI","ANDY ISWANTO","VICKY MAULANA FACHRUDIN","ALVINO AN NAFIS KHAIRUDDIN","SUTRISNO","SAHRUL ROMADHON","ROKHIM","SYAMSUL YASIN","ZUBAHIDI","FATIHUL MUNA","KARTIKO BAYU TIRTO AGENG","REVIKO ZANUARTA ALFARIZI","SAMTANI","FARIS AL FADHIL","FURQON HUSEIN AHMADI","KUSTO","MUADI","MUHAD RUDIA","ABDUR ROHMAN AJI","SUMANI","RAVASYA KENZIE AL HABSYI PRATAMA","RACHMADHANI RIZKI HERLANSYAH","ANOVA PEPSY KRISWARDHANI","MINANUR ROHMAN","NUR FAHMI","ARIS","MOCHAMMAD ZAINAL ABIDIN","ARIF DWI SUSANTO","SUBEKI","RIZKY PRATAMA","RIZKY DWI ALVIANSYAH","ANTO","NAUFAL KIANDRA LUTFIANTO","SUMINO","SUROSO","MUHAMAD YANI IRFANSYAH","ARDY FIRMANSYAH","AGUS SUSANTO","RICO EKA FEBRIANTO","RIZKY AKBAR ALVIANO","SAHRUL ROMADHON","DAENURI","NAZAL MUHYIDDIN NAIM","FAHMI AL GHOZALI","SUPRIYADI","SUJONO","IMAM HASAN","YUNUS","FENDI TRI PRASOJO","SUMITO","ZUDHA SUWANTORO","YULIANTO","EKA DAFA YULIANTO","HARI MUNJAROH","NAUFAL AZIFATURROHMAN","LILIK RIF'AN","ATHOK ILLAH","TAUFIKUR ROHMAN","IMAM SIBLI","SUMADI","HARIYONO","WINARTO","MURDOPO","KHOIRUL AMIN","NABIL SYAUQI","SUDARTO","TASLIM","LIANTO","HERI KISWANTO","IFAT AFKAR RAZIQ HANAN","PARSAM","ZAINAL MAHMUDI","ABDUL MAAJID AL-FARIZY","ONI TRI OKGIANTO","AKHIYAR","ABDUL AZIB","MUKSIN","HARDIYANTO","FARIT SEPTIAN TEGUH SAPUTRA","ARIANDIKA","ZAEPAN ZIDHA FAHN","WAWAN HERMANTO","ABDI SALAM","YULIANSYAH ARISTIANY","MARTONO","RIFA'I","GUNARYO","CIPTO","SUBOWO CAHYANING S.","RAFIE DWI MARDHIAN","WARSO","KELVIN SETYAWAN","SUNGKONO","KARMONO","ABD. NAFI'","ROBET AINUN FARHAD MUQOFI","SAMTANI","MUJIONO","ANDI JATMIKO","ALMEER WAFI PUTRA JATMIKO","AQI AL RASSYD WIGUNA","PRAHARA ZULFIKAR PAMUNGKAS","ARIS IRWANTO","ARVINO ENGGAR SYAHPUTRA","SUHARTONO","ARI KARTEJO","SAEFUDIN","ARIFIN DIMANSYAH","MIFTAKHUL KHOIRI","AZKA SATRIA RAMADHANI","SONA IRAWAN","AZRIL SYATHIR IRAWAN","SUYONO","SUHARTONO","ABDUL GHOFAR","ZA'FAR RAMADHAN AL GHAZALI","SHODIQ ZAPAR SHIDIQ","DANIYAL AROBI","ALFIN SAPUTRA","ANDIK SUSANTO","FARID ABDUL GHONI","ALFAREZI RASHYA ALTHAFURRAHMAN RAMADHAN","MUJIANTO","SUPARDI","ALI ROFIIN","IMAM SUWITO PUTRA","HAFIZ ZAINUL ARIFIN","NYONO","ARI RATNO PAMUNGKAS","EDI","REIHAN","SAKIMIN","ROHMIJAN","YASIR ARAFAT","LOUIS ALRESCHA AULIAN ARAFAT","ZAENAL A'ANSORI","ZAINAL IHWAN","ARZHANKA AHYAN ABRISAM","SOFI","MUHAMAD ASARI","DIVA FIGO VALENTINO","MUZAQI BASSA","AGUS BUDI WIJAYA","SUNGKONO","YOGA PRASETYA","TOTOK KUSWOYO","ALVIN BINTANG PRATAMA","ALBY ARSENIO KUSWOYO","HADI SUYONO","SYARIFUDDIN ZUHDI","ALVIAN PRATAMA","DIDIK HARTONO","ARIF MEILANA","MAMAN WARTIMAN","BACHTIAR NOVENDI","MUCH DIO GALIH SAPUTRA","KIS RUMANTO","ALDIAN PUTRA YULIANTO","DIAN NUR RIFQI","RIKI HANDIKA","MAT SULKAN","ARIS","MOKHAMAD SUHARI","AL FATIH","GIGIH WIDYANTORO","FARID ABDU GHONI","WAHYU CAHYONO","SATYA NAUFAL MAULANA","DIDIK PRAMUDYA","EKO","KALIS","MASHUDI","LUJENG WIBOWO","SUMARTO","AZZUARDI IZHAR AL FABIAN","SRIJANTO","BIMA NURCAHYANTO","ANIS ARIFIN","MUSTOFA","RIYANTO","NASIKIN ALI","ANDI IRAWAN","SETYO BUDI","MUNANDAR","AGUS WIDODO","SHOLEH","WARSITO","O'ON HERTONO","NOVAN KRISTANTO","RAMA ARDIANSYACH","SUPOMO","KASMIRAN","HENDRA PRIYANTONO","SISWANTO","SAMUJI","RASIMO","AFIF ZAMRONI","SAGET","ANANDA PRAYOGI","KARSO","RIFAI","NUR ALIMIN","SURAWAN","HARI MUNJAROH","RUSMINTO","LANTIP","TABRI","ISMADI","KASDIRAN","SUKOYO","AMIN","SENDADJI","KASTOWO","AGUS SUPRIYANTO","SAMINAH","SLAMET","KARYONO","KASMURI","SUTAMAJI","WARDOYO","RAMELI","MUDJITO","SAMIRAN","SUPARDI","EDY WINARNO","BUNADI","AMIN","MUGIONO","AGUS SUSILO","SUTIKNO","MUKHTALIFIN","RASMANI","RUSDIANTO","IKHSAN","ABDUL AZIZ","ILYAS","AGUS PRABOWO","ROIHUL AMIN","FAHRUL KHAIRULLAH","DZIKRULLAH","TRI SUSANTO","WILDAN HABIBIE","ILHAM YAHYA HABIBIE","NUR ALI","KASDURI","TASMIRIN","TARJI","M ZAINAL ARIFIN","PAKIH","KASPAN","MOKHAMAD EFENDI","SUMILAN","UMAR USMAN","SUBANDI","EDI SETIAWAN","AGUS SHOLEH","FAJAR ISMAIL","DANANG MA'RUF","TARJI","SLAMET","ANDIKA","SUTAMAJI","JASMANI","DAFFA BAGUS PRATAMA","RUSLAN","SULISTIONO","WAJIB","IVAN HANAFI","EKO YANTO","SANUSI","RUDI DARWIS","SUMARNO","SUJITO","SURYANTO","SUKADI","GILANG FATCHURROZY","GALANG FAIZ ALAMSYAH","SUWANTO","DWI PRAYOGI","MARNO","SUTARJAN","ANWAR FAUZI","AGUS BUDIONO","AJI SANTOSO","SUTIKNO","IBNU HAMMAM","LIS SUNARYO","ANDRY MUGIANTO","CAHYADI GUNAWAN","TAMIJAN","KASDAR","SAMIDI","SUTANTO","MURTIJAN","WARI","EDY PURWANTO","MUSTAKIM","SUJIONO","SOLAFUDIN","SUDARMAN","MASYHUDI","NGADRI","MARTONO","ZAINI EFFENDI","SUTRISNO","KASIYUN","WIDIYANTO","SUJUD","BUNAJI","SUWANDI","KASMIN","KARNOTO","SUKONDO","ALFIN","SADIKUN","SUPOMO","WIJI","RIFAI DWI AFANDI","DONO","KARDI","ARDIANTO","KARSONO","MAKSUM","SUMARSO","IMAM FAKHRUDDIN","SYARIF HIDAYATULLOH","NURIL HUDA MUTTAQIN","KASDANU","SANTOSO","RAFID HAKIM","LASMURI","MUNDAKIR","FANI SULAEMAN","SAKUR","SUPRIYATNA","SUGIANTO","SUYANTO","SHANDY VERIYANTO","TEGUH YULIYANTO","NANANG KOSIM","DARJI","HERMANU","DARSONO","SUKARJI","HENDRO PRASETIYO","SUMIJAN","SUWARNO","SUTAMAT","SUNTARI","SUWARDI","MASNI","WARTO","SISWOYO","SUBAGIO","JURI","LASIMIN","KASUWI","TARNGUN","BAMBANG KASIYANTO","BAMBANG YULIANTO","NURSAM","ARIYANTO","EKO PRASTYO","ADITYA DWI SETIAWAN","ERDIN YULIANTO","BISONO","MARI","SAWIN","SUYONO","MAHMUD","KATUM","WARSIDI","SUYANTO","HADI SIONO","MUNARKO","GUSTARI","SUJOKO","SUTRISNO","ISKANDAR","PANJI","THOIFUR","BUJAMIN","DJAENURI","MUHARTO","SAMPURNO","BAGUS EKA MUNANDA","DIDIK CANDIONO","SUYATNO","MUANDOKO","RUSLAN","ALDO SAPUTRA","JOKO SUSELO","ABDULLAH FAUZAN","ARI NUGROHO","SUCIPTO","KURDI","WASIRAN","MULYONO","SUWONDO","KASMAJI","SETIAJI","GALIH PRADANA","TUKUL WIGUNO","KASDIRAN","TAMISAN","MATRAJI","RAMADHAN","DJIYANTO","SUJAK","SISWO","SUNTORO","SUTAJI","IRSYAAD","NURHADI","RUMAJI","SUNARTO","SUMINTO","UNTUNG","NUR HADI","FAUZI","LASMONO","BAHRUL ULUM","JA'FAR SUNTARI","SUTIKNO","SAJI","HARDI KUSTOYO","RENDY KUSTOYO","SUMITO","RIDWAN","ERLANGGA SEPTARA SAPUTRA","SUTOPO","SUYITNO","KASIYAN","SUSANTO","ANTON PURNOMO","SHOBIRIN","ABU BAKAR","KASNOTO","KASDUKI","LASTAM","SAMADI","BUDI ISDARYANTO","ISNADI","SUPRIYADI","DJASWADI","DWI RIZAL PURNAMA","NUR AHMAD","MULYADI","AINUL YAQIN","MUJIBUR ROHMAN","MUNTADZIR","YAHYA RIF'AN","ASHURI","NYONO","ROHMAD","NUR QOMARI","RODI'IN","JUMALI","SAIFUDIN","SAIPAN","SUMARTO","WIDODO CAHYO","ASMOLAN","SUPRIYANTO","NANANG SUPRIYANTO","AGUNG PRASETYO UTOMO","DJUNARTO","NURUL HUDA","BUDIONO","DARNO","KUSNADI","WARAS","SUYITNO","NGASIMIN","HUDI","MUNTAHAR","KHOIRUL ANAM","YOYOK KISWOYO","SUMARSONO","SADAR","SISANTO","NOVA SISBRIANTORO","JAERI HUSEN","SUNA'IM","MUKRI","PAMUJI","DONI ROHMAN","SUKENI","NGADISAN","NASIRAN","SIRWANTO","SANDI HARIADI","SUBAKIR","LUTFI MUBARROK","HUSEN AFANDI","SUWARNO","TOHIR","SYAMSUDIN","RIFA'I","SUWANDI","ROPIPIN","SHOLIHIN","PARTO","ILHAM","SUNDARJO","TOMAJI","BAJURI","HIRWANTO","SUNARYO","EKO SUWARNO","MUSTOFA","SUBRAHIM","ILYAS","SUWARDI","SAMIAN","NASIR","KASDAR","NGASIMIN","SOLIKIN","WAHYUDI","KUSNAN","ANSORI","KARDIMIN","SUTRIS","KASMUDJI","ALI KUMAEDI","ALI MAHMUD","ALI MUALIF","SAMIJAN","KASDIKIN","KASTAIN","ISNAENI","ZAENI","RASEHI","KUSEN","DAIS","JALAL","ABD. AZIS","SUTRISNO","SOLEH","THOLIB","TOHA","JUWARNO","EKO WAHYUDI","RASMIJAN","SUPANGAT","ALI MUKTAR","RIFAI","A. BAHARUDIN","DULKASIM","TOTOK SUBARJONO","NURHADI","UMAR RUSLAN","MUZAKI","RAWID","MUZAMIL","HAJIR","EDI SUPARYONO","ALI WIDODO","M MUNAJI","ROHMAD TOYEB","SODI","ICHSAN","JAENU","SAID ALFIAN","YUSUF","NASRUL MUJIB","MIFTAHUL HAKIM","AHSIN KHOLQI","WASIRAN","IKSAN","SUDJI","NURUL HUDA","ANWAR BADAWI","MAHFUDH","ADNAN","TADJIB","IMAM SUNARKO","WARTONO","BIMA SAKTI","DJUMANI","IMAM TAUKHID","ALFANI","MARJI","WIDODO","MAKSUM","FAIZIN","WARSIYAT","MUDAYAT","BAYU SEPTIAWAN","KARMONO","SAIFUL HADI","ASROFIN","JOHAN","WARSILAN","KUSWANDI","KUSMANDRIYO","SUPARNO","RANGGA FAJARIYANTO","SUKASBAN","SUBAKIR","SHOLIKIN","MUKHAMAD MIFTAHUDDIN","ALFIAN AGUNG NUGROHO","SUROSO","SUYANTO","WARMANI","SUYITNO","MUJI","CIPTO","BUTOMO","SUKARMAN","SUJI SUGIANTO","SUDIHANTO","ADEM","HASIM","SUMANTO","ONI","SUWARNO","WARAS","DJASMANI","SURATMO","SUTOPO","SUKABAT","MULYONO","JUMADI","SUWADAK","FERI","SARMIDI MARLIM","MATRAJI","SUBARI","DARSONO","TAMSIR","ANDRESNO","SUWOCO","RUSLAN","MOLAN","NUR ALIM","MADJUIN","KASTOLAN","SUWANTO","BUNARI","MUDIYAN","LASMINTO","MUSTAJI","WAWAN","SAMAR","MARSAM","LASIMAN","IRIANTO","KALIM","KASTONO","MASIRAN","JUNARI","KANIMAN","DAMBAS","SARMUJI","DARMINTO","KASNARI","NURAJI","TASMURI","SUPARTO","PUTRA AGUNG SEDAYU","KROMO","DIDIT PRATAMA","KRISNATA","SUYONO","TARAM","KASIRIN","TARMUJI","COKRO","TADJI","ANDIKA","ANDRE","REBAN","SUMARTO","SUGIANTO","GAMPANG","MUSIRAN","SUKIMO","KARMIJAN","MULYONO","SUDIMAN","PRAWOTO","LASMONO","SAIFUL ISLAM","DASELAM","DARMU","YASMINTO","MUKAROM","SANUSI","WARAS","MURTAJI","KASMANI","BAMBANG HARIYANTO","SAEKUN","SUPARLAN","KASTUM","SAMPURNO","SUJOKO","SUWARJI","ANWAR","SUPARMAN","MARWI","KASNO","SAWIT","ARIS MIGIANTO","KADRI","DUMADI","AHMAD","SUPARJI","KASTURI","ZAENAL ARIFIN","SUPARMIN","DENI","MUSTAKIM","MUHADI","FATHONI","KARSO","SARIP","ABDUR ROHIM","KARNAWI","SUGENG","SAMINGUN","AGUS","KARTIJO","ANDRI","TARSIMIN","LASMIJAN","LASIRAN","SUYATNO","NYAMAT","SAHALI","KHOIRUL UMAM","JOYO KARNO","WARTO","SUHARDI","SAKIM","MULYADINI","IRAWAN","SARBANI","SAMUJI","LUMANI","ADI PRASETIYO","MULYONO","MUNAJI","EFENDI","KASTONO","YUDA AGUSTIN","TAWAR","KARTONO","RIFAI","KARSIMO","RASIMO","ADI BING SLAMET","SADIR","SONI SUSANTO","SAMSURI","YOSO SUWARNO","KARMIDI","HENDRI APRIANTO","JANURI","MUNADJI","SAMURI","MARDI","DARMIANTO","DIKI WAHYUDI","KARSO JOYO","SHOLIKIN","KADIR","FUDOLI","HERU SAPUTRO","RASMIJAN","ARIF NOFANTO","KARJINI","MAHFUD","SOBARI","SLAMET BUDIONO","RYAN BUDIANTO","ARMAN SUGITO","SUNARKO","PUJI","LUJENG","SUHADJI","SUPARMO","JOKO WINARNO","WIDODO HERY SUSANTO","JALAL","ABD. AZIS","IMAM EFENDI","RAFA RAMADHAN","NOVIANTO ARISANDI","ASTAR BAKHRONI","DEDI","ANGGA SEPTIADI","AGUS SETYAWAN","SHOLEH","SUTIYONO","SYAEFUDIN","MARDIANTO","KUSNO,S.AG","MUKRI","SUBAGIO","YOSA MAULANA","ROMI ASHARI","KASMIDI","SUWONDO","KASNO","NGADIKUN","MUSDI","SUWARNO","NGASRIYAT","JOKO PRIYANTO","DUROHMAD","SUPRAYITNO","MUTALIYONO","DJASMIN","JAMAL","HARNANTO","MUKLISIN","KARSIYAN","LASEMU","HARTONO","SUPRIYONO","SUPRIHATIN","SUNARIYADI","MUIT","JUPRI","ANDOKO","ANDRIANTO","YANUAR ADITYA","TASIMIN","SUKARDI","TRIMO","JAELAN","AGUS WAHYUDI","KARYONO","KASMIDIN","SADOLLAH","ANDRI WAHYUDI","YUSUF YULIAWAN","KARMIDI","SUKARNO","IMAM TAUQIT","MUNIR AR","MBARNO","DARSONO","PARTONO","MUHTAROM","KASILAN","SLAMET","LASEMO","SUNARDI","MUSTAIN","FAIZIN","KARMONO","JOKO SAPUTRO","RAKEMAD","WAHYUDI","SUJAK","MASHUDI","SUMITO","HARYONO","ADAM MAULANA","SUGIHADI","RIZAL YULIANTO","SUMANTRI","MUSMAN","WAHYU EKO WIDODO","SISWANTONO","RUSBIYANTO","KASELAN","SUDIYONO","DWI SETIAWAN","WARTONO","GALIH SETIAWAN","GAMPANG","KUNDOKO","ZAINUL ABIDIN","MUJI","JASWADI","SUWARNO","BAYU ADITYA","SURADI","KASMU","SULIKAN","IMAM BASORI","SUTOPO","ALI","YUSUP JANUARTA","SUPARDI","SUPARLAN","MUNAWI","FEBRY ARIANTO","JATMIKO TEGUH","ENJI WIDODO","TONI SISWANTO","MUHAIMIN","MARWI","SAMSURI","MULYONO","TAUFIK","A AN ZAKARIYA","SUYITNO","HERI SULISTYONO","SUMARNO","SOEWARDI","MUSYANTO","KARTONO","DWI NUR CAHYO","ZENALI","SUPOYO","NUR KHOIRUDDIN","SYAHRUL HARTONO","ERIK EKO FEBRIANTO","FAJAR KRISTIANTO","MARISAN","SALIYO","KASTOLAN","ANTONO","WARSIMAN","SUNARKO","WARNADI","PARSI","SUWARNO","FERDI FATURROHMAN","SANAJI","ASPAR","KASMONO","HARIYONO","DANNY SETIAWAN","SAHLAN","NANA","SUNARDI","SUWARNO","SAMURI","SUTARTO","SUHARTO","ARIYANTO","RUSMIYANTO","NUR AFFANDI","SAHENAN","SAKRUN","JITO","SURAJI","WARTO","NGASINO","WARAS","SUWARNO","SAMPURNO","SUDAR","ARIS BUDIONO","SUMADI","YUSUP","YOYOK SUNARYO","KASTO","SUKANI","SYUKUR","PURNA WARDANA","KUSTARI","SUWITO","ARDIKA PRASETYO","BADRI","PARSIH","SUWOTO","HIDAYATUL MUSTOFA","KASIDO","USMAN","MUNTALIP","SUJONO","NURYANTO","KUSNAN","SUKARDI","ADI WINARYO","KUSDI","INUL SETIAWAN","EKO SULIANTO","SUTOMO","SUMARTO","KASIRUN","ADI PRANOTO","TAMUJI","ABDULLAH","RUDI HARIONO","SAMIDIN","NOVIAN SAFITRA","SUWADI","SAMTONO","SURADI","SUTRISNO","LASMO","SAERI","AFIFUDDIN","ZANURRI ARIF","NGAJIRIN","ROHYADI","DAVID DWI SANDI","TRIO ANWAR","KARMU","MUSTARI","HARSONO","GUNADI","WARDOYO","AGUNG BUDI RAHARJO","SOLEH","CISTO","KARTONO","SUNGKANI","SUMITO","SUTOYO","SUTIKNO","SURIPNO","SALIM","WELAS","SUDARTO","KASIYANTO","SUMARI","SARKAWI","EDY SUSANTO","MULYADI","SRIYONO","MAKIN","KASMIJAN","SUHADI","TASLIM","SUMIRAN","SOLIKUN","SUPARNO","KASWAJI","SUJONO","KUSNADI","WADUD TRIYONO","SUMAJI","JURI","KARIYADI","KASIRIN","ILYAS","HADI WINOTO","KEVIN","GUNARDI","CANDRA GUNAWAN","KASMIJAN","JUDIONO","WIWID ANDREAN","FANDI NOVANTO","SUHERMAN","SURIPTO","SUPADI","KARDJI","SUNYOTO","LAMAN","TAQIM","KARSONO","SUYONO","KARNOTO","SUKIP","MARWAN","MUKIYO","RIYADI EDISON","EDO SAPUTRO","LASTARI","KARSIMAN","SAMPURNO","SEGER","SUWONO","SUTIKNO","WARDJI","SUKARDI","EKO SUYANTO","SUWARNO","KUSNADI","KASIRAN","SUMANI","SUYONO","DJASWADI","SAMIADI","SAMPUR","SUPRAPTO","TARKAN","KASELAN","EKO SUWARNO","WARSIDI","SANDIKIN","KASDARI","KANAN","SUKARDI","MUDJIYANTO","ZAENAL ABIDIN","ARDIKA SETYAWAN","SUNARWO","FAJRIL ISNAINI","SUGENG","RODO","MUJIONO","MUTAMASSIKIN","JOKO LULUS","RUPI'I","AGUNG WIDODO","ROBIYANTO","YUDIONO","MUADI","TAMUDJI","KASNOTO","SALIM","ISMAIL","DASUKI","SUNTONO","KASNAJI","ROFIQ","SURONO","SUMADI","SUKARYO","PAKIS","YATUN","CAHYO WIBOWO","SADIKAN","MATRIYADI","KARMIDI","KASIRIN","SUPARMAN","YATMAN","SUGIARTO","SUKIDJAN","SUMIRAN","ALI IMRON","DEDI SETIAWAN","SUNARTO","SUKIDJAN","TOHA","SUYITNO","EDDY SUPARMAN","KISNO","SUJIMAN","SUTOMO","DJAYUS","DWI PURNOMO","SAMSURI","KARSIMIN","SUHADI","MASKUN","SUMANTRI","MARDJUKI","KASTOLAN","KHOIRUL ANWAR","KADAM","KASIADI","HERU SUPRIYADI REHWAN","KASMOLAN","SUTOPO","SURADI","MUCHAMAD ISWAHYUDI","DJAPAR","WARAS","TOMO","HERU SURYANTO","SARIDJAN","RUMIANTO","HERIYANTO","SUROTO","NAWAWI","SAIFUL ISLAM","SUNARDI","NURYANTO","SUMITO","SUWANTO","BAMBANG SUTRISNO","JAYADI","JOKO SUSILO","NGASEMO","HARSONO","KAMSIR","SAWIT","SUDARYONO","JUMARI","SUKARPONO","SUPRIYONO","SUNARTO","SUDARKO","LASMONO","MUKOYO","SUKIRAN","PARDI","MULYONO","RIANTO","KASMUJI","KASMONO","JOYO KARSO","MUJIRAN","SUSINTO","KASMUIN","SUPENAN","MURSIDIN","TASLIM","CIPTO","KASMIRAN","MUKKI WIBOWO","BUDI SETYONO","KARJAN","WARNOTO","MUNADJI","SUNARWO","MUGIONO","JAENI","SUGENG","LAMBANG SETYO BUDI","SUPARDI","ANDI TOPAN","MUJIANTO","SUDARKO","HARSONO","SUTRISNO","HUDIONO","AGUS SUKAMTO","YONO","SUPARMAN","SISWANTONO","ALI ISMANTO","NOER SAID","GUNCOKO","TAMIDJO","SUTRISNO","SONAR","ABDULAH","KASTONO","ONO","SUKANDAR","HARTO","HADI SETIAWAN","WARDJI","KASMU","MUJITO","KARMAN","SUPRIYANTO","RASDAM","SUNARDIN","KOIRUL HUDA","ABAS","MULYONO","TARA","SAKIBAN","DASUKI","DARMAJI","KARIYADI","SUDIR","DEDI SETIAWAN","SAKUR","TARMO","RIYANTO","DARMANI","SUMADJI","LAZIM","AINUL YAQIN","TAHAR","ASTROPON","KUWADI","KUWAJI","MUHLISIN","SANIMAN","KARMONO","MARKUN","JAYUS","EDI SUSANTO","KASNO","MUJIHARTO","SUMARI","NURHADI","ZAINUL AFFANDI","AGUS SUNARYA","SUDARKAM","JONO","SURATMIN","KASNOTO","SUMARLAN","SUKEMI","LASMIDJAN","SUKARDI","KACUNG","JUDI","BUDI UTOMO","JOKO WAHYUDI","SUBCHAN","MUSIRAN","YUSUF","SUPRIYONO","NGATONO","SUPARLAN","SUWITO","PUTRO AJI SASMITO","EDY HERMAWAN","SAEFUL AMIN","JEFRI","SUWARNO","HASAN AL BISRI","NURYADI","SARIFUDIN","IMAM MUKLASIN","IWAN KURNIAWAN","KOESWANTO","HADI WIYOTO","KARYAWAN","DODIK KURNIAWAN","SUTRISNO","SUBEKI","UNTUNG","SUDARJI","JIMO","AGUNG PRASETIYO","LASIMAN","JALI","FAHRUR ROZI","DARMU","MUSADDAD","EDY WAHYONO","AGUS SETIYONO","YULIANTO","JAYADI","YAHYA SETIAWAN","WANTO PRASETYO","IMAM SUBANDI","SARIMIN","ANANDA PRAYOGI","KASMARI","IRWAN SISWANTO","INDRA WAHYUDIANTO","KHUNDHORI","SUMARDI","SUHARNO","SUSANTO","RUDI","SUPADI","MULYONO","SALAMUN","AMAD SOLIHIN","SULISTIONO","SAMU","SUPARDI","SAMSUL HADI","SUPRIYADI","ALDI SEPTIYAN","DWI SANTOSO","ROQIB","WINARTO","NANDA GALIH ARYAGUNA","GATOT SUNARYO","KEVIN SAPUTRA","MUNDAKIR","SAMUJI","SANUDIN","MURADJI","EDI SEPTIAWAN","FERI DWI SAPUTRA","JOKO SUMARTO","EDI SUGIANTORO","IMRON SYAFII","SUSANTO","SUGIYONO","ALFI","BAMBANG HARI SUBIYANTO","RUSMINTO","KASIRAN","SUYONO","MAT JA'I","MAULANA ALI AKBAR","DARWAN","ARIFIN","SUHANTO","MULYONO","MUCHTAR","MASKUR","SUDIRO","SAPTONO","TOLE UTOMO","FATIH","SOLIKHIN","IMRON","SARJIANTO","DJUMANI","SISWANTO","MUNTAHA","HENDRIK","SUTAHAM","NUR WAKIN","MASHUD","IMAM SYAFI'I","SAIFUL HIDAYATULLAH","SUWIGNYO","ASNAWI","DANI","AGUS SETIAWAN","SUGENG WIDODO","TAKIM","MARDAM","SUJONO","SUKAERUN","SUTIKNO","AGUS WAHYUDI","WARTONO","SUBAGYO","SUGIARTO","YULIANTO","SUMARNO","NUR WIJAYANTO","INDRA HARYANTO","DADANG SUHERMAN","GUNARDI","MARDIONO","DARWOKO","HARI PRASETYO","ADI SETIAWAN","AGUNG SETYA WAHYUDI","SLAMET SUGIANTO","PRANOTO","ALI MASHURI","JOKO SLAMET","GOGOK WAHYONO","SUTIKNO","SUPRAPTO","RISMANTO","NURKODJIN","SURATNO","QOMAD","MUSA IBROHIM","PAIDI","MURDI","IMAM NURJAYADI","SHOLIKHUDIN","ZAENAL EFENDY","HADI SISWO","SUGIK MARGIANTO","ARDIKA OKTAVIANTO","SUNARTO","ILHAM SYAHRONI","RUDIANTO","TEGUH PAMBUDI","ROMI FAHREZA","HUDI ARDIYANTO","AGUS SUPRIYANTO","KOMARI","TASIRAN","TAMBAH","LODA MUNTAHA","LANDUNG ASHARI","TABRI","PARMIN","YANTO","YULIANTO","SUYADI","SUJI","JEFRI","ASROFIN","EDI SISWANTO","TAMILAN","SLAMET RIYADI","TAUFIQ","CHOIRUL WARDHI SUSANTO","JOKO BUDI SANTOSO","TAMSIRUN","SABIN","BUDI SUYATNO","TURYONO","RENO FIRNANDA","SUPRIYANTO","PONIDIN","DIDIK PRIANTO","KAMARI","SUDARKO","SUBAKIN","ARIS PURNOMO","DARMONO","SAEKUN","YUDI","ISHARIYANTO","MASRUKHIN","WARJIYATNO","MUJIONO","HERY SUYITNO","WIDODO","WARJIYANTO","AGUS WAHYUDI","WAHYUDI","TRIPOMO","TUMITO","FAUZI","HERI SUGIARTO","MANSUR","EDY WAHYUDI","NUR ROMADLON","DASMINTO","SUNATA","MADJI","KARTIMAN","MAKIN TEGUH","SURIYANTO","SURO GENDUT","EKA SLAMET NOVIANTO","SUDARTO","SATYA JANUAR","SUNARKO","ASIYAN","SARKO","JUNI HARTONO","ISWAHYUDI","KARTONO","SUPARLAN","ISBARNOKO","SUNARKO","HADI SUTIKNO","IMAM KAMBALI","PARJI","AGUNG IRSISWANTO","SUTRISNO","EDY","KAMSIDI","PINGKI","SUTOMO","ANDY SUSILO","IVAN SETYONO","MASLIHAN","AGUS SUSANTO","SUWARNO","SUYITNO","NAUVAL MAULANA","SUKAJAD","NARTO","KISWANDI","SUPARDI","MACHMUDI","JOYO HARDIANTO","ALI SHOFA","ALI","SUYANTO","JUMADI","DULYADI","SAMANI","JASTO","JULIO SAPUTRO","MARJUKI","HERMAWAN","FAUZAN","SUYONO","AGUS IRAWAN","SAMTONO","ARDI PRATAMA","YATMIN","SUMARDI","AGUS PRASETIYA","KASDI","ALI MAK'RUF","ADITYA ROHMAN","SUDARTO","MUJIONO","SUWARLIN","PURWODIANTO","HADI SUTOPO","SUPRAPTO","NURJUDI","SUTRISNO","RUDI PRASETYO","RIZAL SATRIYO","SUKIRNO","RONI","SUDARKUN","WARTONO","NOFIK DIKI SAPUTRA","SUPRIANTO","NGASRI","ADI PUTRA","BUDI UTOMO","ZAINAL ARIFIN","SUBAKIR","RUWANDI","SUTRIATMIKO","SUBALI","JAMARIK","SAPARI","SUWARDI","ANDRI WAHYUDI","MUHARI","SISWANTO","SYAMSUL ARIEF","AINUN NAIM","CAHYA BINTARTA","GAIB PRASETIYO","SAMSUL ARIFIN","MAS IWAN","SUPRAPTO","AMIRUL AMIN","WINOTO","AKHMAD FAKHRUDDIN","HARMAJI","SISWANTO","MOKHAMAD ADIB","AGUNG SUTEJO","FIRMANSAH","AFDHONI","KALAM","SUYASMINTO","BOIMIN","ALI ANSHORI","NUR SYAHID","MIFTAHUS SURUR","HARMINTO","KARYONO","MURTANDO","WAWAN BUDIYONO","IMAM ABDURAHMAN","KHOIRUL FAIZUWAN","HADI PRIYANTO","IRWAN PURWANTO","NUR ABIDIN","MASKUN","SUHERMANTO","SUDIYONO","JOKO ENDRO","EKO WAHYUDIN","ICHWAN","SAPUTRA","AGUS WIJANARKO","KASIM","EVEN PRASETIYO","CHUZAINI","SUPARMAN","KASTAM","BENTAR SAIFUL","MUSLIMIN","TAMU","KISNARNO","TEGAR PAMUNGKAS","MINARKO","NUR KHOZIN","SUROSO","JASMONO","SISWOYO","MURTAM","JULI ARIFIN","RIO","KASNARI","SAKIJAN","RIZKI SAPUTRA","ARIFIN","RIFA'I","PRAPTO","SUNARDI","LUMAJI","SUTRISNO","SUWITO","NURCAHYONO","FATONI","DONI SAPUTRA","HASAN","MUZAKI","YULIONO","RUSWANTO","ASHARI","SUGIARTO","HADI SISWANTO","PURNOMO","SUGIARTO","ANDY DWI NUGROHO","SUPRIYO","SUKARDI YUSUF","SIYAN","JARI","SUTOYO","KOZIN","RUDIANTO","DASURI","FAHRUL RIZAL","JOHAN","RUSDI","SENTOT MARIYONO","NUR RIFQI WIBOWO","RAHMAT SUJIAN","KUSNANDAR","KHUDLORI","KUSNO","MUKTI WIBOWO","ADI","WAWAN SETYAWAN","DARMINTO","SAMPURNO","AGUS MARDIONO","SULIN","AFIFUDIN","SAIKHU","RAMU","OKTAVIAN PRATAMA","ROI SAHPUTRO","ANAS ABIDIN","NURIL MAHFUDZ","KUSWANTO","ROHMAN","ALVAN RUSANDI","ZAENURI","MULDIANTONO","SURAJAB","SUANDOYO","AGUS MAHMUDI","MUNANDAR","RUDY HARTONO","AGUS WAHYUDI","SUEB","HENDRA GUNAWAN","SISPRIANTO","SUGIANTO","WIJI","IWAN WAHYUDI","KASNAJI","KASTARI","JUPRI","WARDONO","DEDI HARIYANTO","NUR HADI","WAHYU SUTRISNO","DIDIK SUSANTO","SARTONO","AMIN FAUZI","KARDIONO","YUSUF","SUMIJAN","AGUS ROHMADI","SUMARDI","BUDI SUGIHARTO","SUHARJITO","MAHMUDI","WINARSO","ABD ROZAQ","ENDIK PURWANTO","ANWAR","SLAMET ASRORI","HENDRO NOKO","ARIF AFRIANTO","IKHWAN BASHORI","AINUL FIKRI","SUMARDI","HERI WINARKO","HADI WINOTO","KARMANI","FAJAR ADI PURWOKO","EKO RUDI WINARTO","GHUFRON RAMADHAN","HAI DEWANTONO","SAPARI","SUWARDI","ANDRI WAHYUDI","GATOT SUDIYONO","MUHARI","SISWANTO","SYAMSUL ARIEF","AINUN NAIM","SAMSUL ARIFIN","SUPRAPTO","ANDRI QOIRUL ANAM","HARMAJI","SUKARJO PAMUNGKAS","SISWANTO","AGUNG SUTEJO","FIRMANSAH","BOIMIN","NUR SYAHID","HARMINTO","KARYONO","MURTANDO","WAWAN BUDIYONO","KHOIRUL FAIZUWAN","HADI PRIYANTO","IRWAN PURWANTO","NUR ABIDIN","MASKUN","SUHERMANTO","SUDIYONO","EKO WAHYUDIN","ICHWAN","AGUS WIJANARKO","KASIM","EVEN PRASETIYO","CHUZAINI","SUPARMAN","KASTAM","MUSLIMIN","KISNARNO","TEGAR PAMUNGKAS","MINARKO","NUR KHOZIN","SUROSO","JASMONO","SISWOYO","MURTAM","JULI ARIFIN","KASNARI","SAKIJAN","ARIFIN","RIFA'I","PRAPTO","SUNARDI","LUMAJI","SUTRISNO","SUWITO","NURCAHYONO","FATONI","DONI SAPUTRA","HASAN","MUZAKI","YULIONO","RUSWANTO","ASHARI","SUGIARTO","PURNOMO","SUGIARTO","SUPRIYO","SUKARDI YUSUF","SIYAN","JARI","SUTOYO","KOZIN","RUDIANTO","DASURI","FAHRUL RIZAL","JOHAN","RUSDI","SENTOT MARIYONO","KUSNANDAR","KUSNO","MUKTI WIBOWO","WAWAN SETYAWAN","DARMINTO","SAMPURNO","AGUS MARDIONO","SULIN","AFIFUDIN","SAIKHU","RAMU","ROI SAHPUTRO","ANAS ABIDIN","NURIL MAHFUDZ","KUSWANTO","ROHMAN","ZAENURI","MULDIANTONO","SURAJAB","SUANDOYO","AGUS MAHMUDI","MUNANDAR","RUDY HARTONO","AGUS WAHYUDI","SUEB","HENDRA GUNAWAN","SUGIANTO","WIJI","IWAN WAHYUDI","KASNAJI","KASTARI","JUPRI","WARDONO","DEDI HARIYANTO","NUR HADI","WAHYU SUTRISNO","DIDIK SUSANTO","SARTONO","AMIN FAUZI","YUSUF","SUMIJAN","AGUS ROHMADI","BUDI SUGIHARTO","MAHMUDI","WINARSO","ENDIK PURWANTO","ANWAR","HENDRO NOKO","ARIF AFRIANTO","IKHWAN BASHORI","AINUL FIKRI","HERI WINARKO","HADI WINOTO","KARMANI","EKO RUDI WINARTO","GHUFRON RAMADHAN","HAI DEWANTONO","SAPARI","SUWARDI","ANDRI WAHYUDI","GATOT SUDIYONO"];
 
+const kata = ["mengeluhkan air PDAM sering mengalir hanya di malam hari, membuat warga harus menampung air dengan ember setiap malam.","mengeluhkan tekanan air di rumah susun sangat lemah, sehingga penghuni lantai atas kesulitan mandi dan mencuci.","mengeluhkan listrik sering padam tepat saat jam belajar anak-anak di malam hari.","mengeluhkan saat listrik padam, pelanggan PLN jarang mendapat pemberitahuan atau kompensasi.","mengeluhkan tagihan listrik sering melonjak dua kali lipat tanpa perubahan pemakaian berarti.","mengeluhkan lampu jalan di gang kecil sudah mati berbulan-bulan, membuat warga takut keluar malam.","mengeluhkan pipa PDAM sering bocor di pinggir jalan tapi tidak segera diperbaiki.","mengeluhkan banyak meteran air tidak akurat, menyebabkan warga harus bayar lebih mahal.","mengeluhkan saluran got di depan rumah sering mampet karena jarang dibersihkan oleh petugas kebersihan.","mengeluhkan jalan baru diperbaiki dua bulan lalu sudah retak-retak karena kualitas aspal buruk.","mengeluhkan proyek jalan sering ditinggalkan begitu saja tanpa papan informasi waktu pengerjaan.","mengeluhkan warga kesal karena jalan diperbaiki justru di musim hujan, membuat hasilnya cepat rusak.","mengeluhkan aspal jalan hanya ditambal di bagian tengah, sementara pinggirnya tetap berlubang.","mengeluhkan banyak trotoar baru dibangun tapi tidak rata, menyulitkan orang tua dan difabel.","mengeluhkan saluran air di pinggir jalan sering tertutup puing proyek tanpa dibersihkan lagi.","mengeluhkan lubang di jalan sudah dilaporkan berulang kali tapi belum pernah ditambal.","mengeluhkan banyak proyek drainase terbengkalai karena kontraktor tidak diawasi.","mengeluhkan harga beras naik drastis setiap kali mendekati hari besar keagamaan.","mengeluhkan minyak goreng kemasan sering kosong di minimarket tapi melimpah di toko online dengan harga lebih tinggi.","mengeluhkan harga telur naik turun tajam padahal stok di peternakan masih banyak.","mengeluhkan daging sapi impor membuat pedagang lokal sulit bersaing.","mengeluhkan ikan laut segar makin mahal karena biaya solar nelayan meningkat.","mengeluhkan harga sayur di pasar berbeda jauh antar kios padahal berasal dari pemasok sama.","mengeluhkan gula pasir sering langka di toko kecil padahal stok nasional diklaim aman.","mengeluhkan harga bahan pokok sering diatur oleh tengkulak, bukan pasar.","mengeluhkan gaji suami habis hanya untuk bayar sewa rumah dan kebutuhan dapur.","mengeluhkan banyak buruh kontrak tidak tahu kapan kontraknya akan diperpanjang.","mengeluhkan pekerja harian lepas sering tidak dibayar tepat waktu oleh pemberi kerja.","mengeluhkan banyak pekerja pabrik lembur tapi tidak mendapat bayaran sesuai jam kerja.","mengeluhkan penjahit kecil kehilangan pelanggan karena orang lebih suka belanja online.","mengeluhkan tukang ojek pangkalan kesulitan bersaing dengan ojek online yang potongan aplikasinya lebih kecil.","mengeluhkan biaya pendidikan anak SD sudah setara uang kuliah karena banyak pungutan tambahan.","mengeluhkan sekolah meminta siswa beli seragam baru setiap tahun meski masih layak pakai.","mengeluhkan murid diminta ikut les wajib di sekolah dengan biaya tambahan.","mengeluhkan banyak guru tidak hadir tapi tetap menuntut siswa disiplin tinggi.","mengeluhkan sekolah negeri menolak murid dari luar zonasi meski masih ada kursi kosong.","mengeluhkan siswa sulit belajar daring karena sinyal di rumah sangat lemah.","mengeluhkan di rumah sakit, antrean pendaftaran pasien rawat jalan bisa lebih dari dua jam.","mengeluhkan pasien BPJS sering ditempatkan di ruang yang kurang layak dibanding pasien umum.","mengeluhkan banyak dokter tidak menjelaskan diagnosa secara detail pada pasien.","mengeluhkan pasien harus bolak-balik rumah sakit hanya untuk tanda tangan administratif.","mengeluhkan kamar rawat inap kelas tiga sering penuh sehingga pasien harus menunggu lama.","mengeluhkan banjir terjadi setiap hujan deras karena got tidak berfungsi dengan baik.","mengeluhkan warga harus membersihkan sampah saluran air sendiri tanpa bantuan petugas.","mengeluhkan proyek normalisasi sungai sering berhenti di tengah jalan.","mengeluhkan banyak daerah langganan banjir padahal setiap tahun ada anggaran penanggulangan.","mengeluhkan warga harus mengungsi setiap musim hujan tapi bantuan datang terlambat.","mengeluhkan sampah di TPS menumpuk karena truk pengangkut jarang datang.","mengeluhkan banyak warga masih membakar sampah karena tidak ada pengangkutan rutin.","mengeluhkan sungai kecil di dekat perumahan dipenuhi limbah rumah tangga.","mengeluhkan harga tiket bus antarkota naik drastis setiap libur sekolah.","mengeluhkan penumpang bus sering diturunkan di tempat yang bukan terminal resmi.","mengeluhkan terminal antarkota minim penerangan dan rawan copet.","mengeluhkan banyak warga tidak bisa menabung karena seluruh penghasilan habis untuk kebutuhan pokok.","mengeluhkan harga sewa rumah di pinggiran kota sudah hampir sama dengan di pusat kota.","mengeluhkan kontrakan murah makin langka karena banyak rumah dijadikan kos atau toko.","mengeluhkan kenaikan harga tanah membuat anak muda sulit membeli rumah sendiri.","mengeluhkan air PDAM sering berbau karat karena pipa tua belum pernah diganti.","mengeluhkan air PDAM sering mati dan kalaupun mengalir warnanya keruh, membuat warga harus beli air galon tambahan.","mengeluhkan tagihan listrik prabayar sering berkurang cepat meskipun jarang digunakan.","mengeluhkan pemadaman bergilir dilakukan tanpa jadwal pasti, membuat warga sulit beradaptasi.","mengeluhkan listrik sering padam saat hujan ringan padahal tidak ada petir.","mengeluhkan jalan beton yang baru selesai sudah retak karena truk proyek lewat setiap hari.","mengeluhkan banyak jalan desa tidak memiliki penerangan sama sekali.","mengeluhkan lubang jalan di depan sekolah belum ditambal meski sudah makan korban jatuh.","mengeluhkan harga minyak goreng curah sering naik karena pengepul menahan stok.","mengeluhkan beras premium yang dijual di pasar ternyata kualitasnya rendah.","mengeluhkan harga daging ayam naik karena pasokan dari peternak dibatasi distributor.","mengeluhkan harga cabai di pasar induk jauh berbeda dengan harga di pasar kecil.","mengeluhkan warga kecewa karena operasi pasar hanya berlangsung sehari tanpa keberlanjutan.","mengeluhkan jam kerja lembur sering melebihi aturan tapi tidak dibayar sesuai ketentuan.","mengeluhkan buruh perempuan sering dipaksa bekerja malam tanpa fasilitas keamanan.","mengeluhkan pekerja kontrak jarang menerima slip gaji resmi setiap bulan.","mengeluhkan banyak pegawai harian tidak mendapat THR dengan alasan perusahaan rugi.","mengeluhkan gaji sering ditunda tanpa kejelasan tanggal pembayaran.","mengeluhkan orang tua mengeluh karena biaya daftar ulang sekolah setiap tahun terlalu besar.","mengeluhkan guru sering mengganti jam pelajaran seenaknya tanpa pemberitahuan ke orang tua.","mengeluhkan banyak sekolah tidak memiliki ruang kelas cukup, sehingga murid belajar bergantian.","mengeluhkan buku pelajaran sering habis di toko resmi sehingga orang tua membeli di luar dengan harga lebih mahal.","mengeluhkan perpustakaan sekolah jarang buka karena tidak ada petugas tetap.","mengeluhkan murid SD di desa harus berjalan lebih dari dua kilometer untuk sampai sekolah.","mengeluhkan dokter spesialis hanya datang beberapa hari dalam seminggu.","mengeluhkan pasien sering dipindahkan dari satu rumah sakit ke rumah sakit lain karena alat tidak tersedia.","mengeluhkan banyak pasien mengeluh karena hasil laboratorium keluar sangat lama.","mengeluhkan warga kesal karena petugas kebersihan sungai hanya bekerja saat ada liputan media.","mengeluhkan banyak perumahan baru dibangun tanpa sistem drainase memadai.","mengeluhkan rumah warga di dataran rendah selalu terendam karena proyek jalan menaikkan permukaan aspal.","mengeluhkan banyak warga masih buang air di sungai karena tidak punya jamban.","mengeluhkan air sumur di beberapa desa tercemar limbah pabrik.","mengeluhkan warga harus membeli air tangki karena sumur kering saat kemarau panjang.","mengeluhkan warga harus antre berjam-jam untuk mendapatkan air bersih dari tangki keliling.","mengeluhkan banyak masyarakat tidak tahu apakah air yang mereka minum aman atau tidak.","mengeluhkan jalur busway sering diserobot kendaraan pribadi tanpa sanksi tegas.","mengeluhkan banyak halte rusak tidak diperbaiki selama bertahun-tahun.","mengeluhkan pengemudi angkot sering menaikkan tarif sepihak saat hujan deras.","mengeluhkan sopir truk parkir di bahu jalan sempit menyebabkan kemacetan panjang.","mengeluhkan petani mengeluh harga gabah jatuh setelah panen raya.","mengeluhkan banyak hasil panen busuk karena kekurangan gudang penyimpanan.","mengeluhkan biaya traktor dan pupuk semakin mahal setiap musim tanam.","mengeluhkan hama tikus menyerang sawah tapi bantuan pestisida tidak segera turun.","mengeluhkan petani muda enggan bertani karena pendapatan tidak pasti.","mengeluhkan harga kebutuhan pokok terus naik setiap bulan, sementara gaji tidak ikut meningkat, membuat masyarakat merasa semakin terjepit dalam memenuhi kebutuhan sehari-hari.","mengeluhkan jalan di sekitar rumah rusak parah dan dibiarkan bertahun-tahun tanpa perbaikan, padahal sudah sering dilaporkan ke pihak desa maupun dinas terkait.","mengeluhkan saat mengurus dokumen di kantor pemerintahan, prosesnya lambat dan penuh birokrasi, membuat warga kehilangan banyak waktu hanya untuk satu berkas.","mengeluhkan sinyal internet di daerah pedesaan sangat lemah, membuat pelajar dan pelaku usaha sulit beradaptasi dengan dunia digital.","mengeluhkan kenaikan harga BBM tidak diimbangi dengan peningkatan kualitas transportasi umum, sehingga masyarakat merasa terbebani dua kali lipat.","mengeluhkan layanan di rumah sakit negeri sering membuat pasien menunggu berjam-jam tanpa kepastian.","mengeluhkan bantuan sosial kerap salah sasaran; yang benar-benar membutuhkan justru tidak mendapatkannya.","mengeluhkan pajak dan retribusi terus naik, tapi masyarakat merasa tidak melihat perubahan nyata pada infrastruktur dan layanan publik.","mengeluhkan korupsi masih sering terjadi, membuat rakyat kecewa karena uang pajak seolah menguap tanpa hasil.","mengeluhkan pemadaman listrik sering terjadi tanpa pemberitahuan, mengganggu usaha kecil yang bergantung pada mesin dan komputer.","mengeluhkan lapangan pekerjaan makin sempit, sedangkan persaingan makin berat bahkan untuk pekerjaan bergaji rendah.","mengeluhkan harga obat di apotek mahal, dan BPJS tidak menanggung semua jenis obat yang dibutuhkan pasien.","mengeluhkan transportasi umum di banyak daerah masih tidak layak dan sering tidak sesuai jadwal.","mengeluhkan trotoar dipenuhi pedagang kaki lima dan parkir motor, membuat pejalan kaki harus turun ke jalan raya yang berbahaya.","mengeluhkan harga sewa rumah di kota besar melonjak tajam, tidak sebanding dengan pendapatan rata-rata masyarakat.","mengeluhkan banyak jalan desa belum diaspal, padahal warga sudah lama mengusulkan perbaikan.","mengeluhkan air bersih sulit diperoleh di musim kemarau dan sumur banyak yang kering.","mengeluhkan warga miskin sering terlewat dari data penerima bantuan karena pendataan tidak akurat.","mengeluhkan macet parah setiap pagi membuat banyak pekerja stres sebelum sampai kantor.","mengeluhkan banyak pengendara motor ugal-ugalan tapi tidak ada penindakan tegas.","mengeluhkan fasilitas halte dan terminal banyak yang kotor dan tidak terawat.","mengeluhkan pelayanan puskesmas sering lambat karena tenaga medis terbatas.","mengeluhkan stok obat di puskesmas sering habis sebelum akhir bulan.","mengeluhkan tenaga medis di desa sedikit dan sering tidak standby saat malam hari.","mengeluhkan program vaksinasi tidak menjangkau semua wilayah terpencil.","mengeluhkan sekolah negeri sering penuh dan sulit dimasuki tanpa jalur yang benar.","mengeluhkan guru sering absen tapi tetap menerima tunjangan penuh.","mengeluhkan kurikulum sering berganti tanpa persiapan yang matang.","mengeluhkan kelas di sekolah dasar terlalu padat hingga lebih dari 40 siswa.","mengeluhkan banyak anak putus sekolah karena faktor ekonomi.","mengeluhkan banjir terjadi setiap musim hujan karena drainase buruk.","mengeluhkan penebangan liar menyebabkan longsor di daerah perbukitan.","mengeluhkan sungai dipenuhi sampah rumah tangga.","mengeluhkan penataan ruang kota semrawut dan tidak konsisten.","mengeluhkan nelayan kesulitan memperbaiki kapal karena harga kayu naik.","mengeluhkan cuaca ekstrem membuat nelayan tak melaut berminggu-minggu.","mengeluhkan nelayan kecil tidak punya tempat jual ikan langsung ke konsumen.","mengeluhkan harga ikan di pasar naik padahal hasil tangkap melimpah.","mengeluhkan banyak warga mengeluh harga bahan bangunan naik terus sehingga sulit memperbaiki rumah.","mengeluhkan akses transportasi malam hari sangat minim di daerah pinggiran kota.","mengeluhkan banyak pelaku usaha kecil sulit bertahan karena pelanggan beralih ke belanja online.","mengeluhkan warga sering kesal karena proyek jalan dikerjakan di jam sibuk tanpa pengalihan arus.","mengeluhkan banyak tempat umum tidak memiliki toilet bersih dan layak.","mengeluhkan petani garam lokal kesulitan bersaing dengan garam impor.","mengeluhkan banyak pedagang kaki lima dikejar-kejar Satpol PP tanpa solusi tempat berdagang baru.","mengeluhkan banyak proyek drainase selesai asal-asalan sehingga tetap banjir.","mengeluhkan jalan tol mahal tapi kualitas rest area minim dan kotor.","mengeluhkan banyak tempat wisata dikelola buruk padahal tiket masuk mahal.","mengeluhkan biaya tiket masuk tempat wisata anak terlalu tinggi bagi keluarga menengah bawah.","mengeluhkan banyak pantai tercemar sampah plastik pengunjung.","mengeluhkan banyak jembatan desa rusak tapi tidak mendapat perhatian pemerintah kabupaten.","mengeluhkan harga bensin non-subsidi sulit dijangkau masyarakat pedesaan.","mengeluhkan petani tembakau menjerit karena harga panen turun drastis.","mengeluhkan pupuk subsidi sering langka di pasaran saat musim tanam.","mengeluhkan warga desa sulit menjual hasil panen karena tidak ada akses transportasi ke kota.","mengeluhkan banyak bantuan pertanian datang terlambat setelah musim tanam lewat.","mengeluhkan kegiatan posyandu sering sepi karena tidak ada insentif kader.","mengeluhkan banyak warga lanjut usia hidup sendiri tanpa perhatian keluarga.","mengeluhkan iuran kebersihan naik tapi sampah tetap menumpuk.","mengeluhkan banyak pemuda mengeluh minimnya lapangan kerja di desa.","mengeluhkan anak muda kesulitan akses modal untuk memulai bisnis kecil.","mengeluhkan banyak pemuda merasa tidak dilibatkan dalam pembangunan daerah.","mengeluhkan generasi muda lebih suka merantau karena merasa tidak ada peluang di kampung.","mengeluhkan banyak orang tua merasa beban kurikulum anak terlalu berat.","mengeluhkan guru kurang mendapat pelatihan teknologi pembelajaran digital.","mengeluhkan siswa berprestasi sulit mendapatkan beasiswa karena prosedur rumit.","mengeluhkan orang tua merasa tugas rumah terlalu banyak untuk anak SD.","mengeluhkan pendidikan vokasi belum menghasilkan lulusan siap kerja.","mengeluhkan banyak keluarga tidak bisa menabung karena seluruh penghasilan habis untuk kebutuhan pokok.","mengeluhkan warga sering tidak mendapat kompensasi saat listrik padam lama.","mengeluhkan warga desa kesulitan menemukan bengkel resmi untuk motor mereka.","mengeluhkan banyak peternak kesulitan membeli pakan karena stok habis di kios.","mengeluhkan banyak peternak ayam rugi karena harga pakan naik terus.","mengeluhkan peternak sapi sulit menjual hasil karena harga daging impor murah.","mengeluhkan banyak peternak ikan kehilangan panen karena kualitas air menurun.","mengeluhkan udara di sekitar proyek konstruksi penuh debu tanpa penyiraman rutin.","mengeluhkan pohon rindang di pinggir jalan banyak ditebang tanpa penanaman kembali.","mengeluhkan banyak warga khawatir banjir rob makin sering akibat perubahan iklim.","mengeluhkan banyak warga lansia tidak punya jaminan kesehatan memadai.","mengeluhkan pensiunan sulit mengakses fasilitas kesehatan gratis.","mengeluhkan program posyandu lansia sering tidak aktif.","mengeluhkan fasilitas umum jarang menyediakan tempat duduk bagi orang tua.","mengeluhkan banyak keluarga tidak tahu cara merawat lansia dengan benar.","mengeluhkan banyak anak-anak kecanduan gadget karena kurang aktivitas luar ruangan.","mengeluhkan orang tua kesulitan mengatur waktu belajar anak di rumah.","mengeluhkan banyak warga tidak tahu cara menggunakan layanan digital pemerintah.","mengeluhkan layanan administrasi online sering meminta unggahan dokumen besar yang sulit dari HP.","mengeluhkan formulir digital sering error setelah diisi penuh tanpa tombol simpan.","mengeluhkan banyak warga kesal karena harus ke kantor juga meski sudah daftar online.","mengeluhkan harga tiket pesawat domestik sering tidak stabil, membuat masyarakat sulit merencanakan perjalanan jauh.","mengeluhkan layanan customer service instansi pemerintah sering tidak responsif terhadap keluhan masyarakat.","mengeluhkan banyak proyek jalan dikerjakan asal-asalan sehingga cepat rusak kembali.","mengeluhkan penyaluran bantuan bencana sering lambat dan tidak merata.","mengeluhkan masyarakat kesulitan mengurus e-KTP karena alat perekaman sering rusak.","mengeluhkan pekerja kontrak tidak mendapat kepastian status meski sudah bertahun-tahun bekerja.","mengeluhkan banyak perusahaan tidak mendaftarkan karyawannya ke BPJS Ketenagakerjaan.","mengeluhkan banyak lowongan kerja fiktif di internet yang menipu pencari kerja.","mengeluhkan buruh tani tidak memiliki jaminan sosial dan sering diabaikan.","mengeluhkan upah minimum daerah tidak cukup untuk hidup layak di kota besar.","mengeluhkan jalur pejalan kaki tidak ramah bagi penyandang disabilitas.","mengeluhkan banyak perlintasan kereta tanpa palang pintu yang membahayakan warga.","mengeluhkan transportasi antar desa masih jarang dan tidak terjadwal.","mengeluhkan pengemudi kendaraan besar sering ugal-ugalan di jalan sempit.","mengeluhkan guru honorer digaji jauh di bawah standar kelayakan.","mengeluhkan sarana laboratorium dan perpustakaan sekolah negeri sangat terbatas.","mengeluhkan sekolah masih banyak mengandalkan hafalan daripada keterampilan berpikir kritis.","mengeluhkan rumah sakit swasta terlalu mahal bagi masyarakat menengah ke bawah.","mengeluhkan tenaga kesehatan di daerah perbatasan sangat terbatas.","mengeluhkan puskesmas sering kekurangan alat laboratorium dasar.","mengeluhkan sistem rujukan pasien sering berbelit dan membingungkan.","mengeluhkan biaya rapid test dan pemeriksaan laboratorium terlalu tinggi.","mengeluhkan warga sering tidak mendapat kompensasi saat listrik padam lama.","mengeluhkan banyak lahan pertanian beralih fungsi tanpa kontrol.","mengeluhkan warga desa sulit menjual hasil panen karena tidak ada akses transportasi ke kota.","mengeluhkan banyak pos ronda tidak berfungsi karena kurang partisipasi warga.","mengeluhkan ketua RT sulit dihubungi saat ada masalah mendesak.","mengeluhkan banyak warga merasa tidak diajak musyawarah dalam keputusan kampung.","mengeluhkan dana desa sering habis untuk kegiatan seremonial daripada kebutuhan warga.","mengeluhkan banyak pemuda mengeluh minimnya lapangan kerja di desa.","mengeluhkan program gotong royong lingkungan sering berhenti karena kurang dukungan aparat."];
 
-      <!--JavaScript at end of body for optimized loading-->
-      <script type="text/javascript" src="js/jquery-2.1.1.min.js"></script>
-      <script type="text/javascript" src="js/materialize.min.js"></script> 
-      <script type="text/javascript" src="js/init.js"></script>     
-  </html>
+const seminggu = ["Minggu","Senin","Selasa","Rabu","Kamis","Jum'at","Sabtu"];
+
+let desa = {};
+desa["penidon"]     = [["Dusun Penidon I","1","1"],["Dusun Penidon I","1","2"],["Dusun Penidon I","1","3"],["Dusun Penidon I","1","4"],["Dusun Penidon I","1","5"],["Dusun Penidon I","1","6"],["Dusun Penidon I","1","7"],["Dusun Penidon I","1","8"],["Dusun Penidon I","1","9"],["Dusun Penidon I","1","10"],["Dusun Penidon I","1","11"],["Dusun Penidon I","1","12"],["Dusun Penidon I","1","13"],["Dusun Penidon I","1","14"],["Dusun Penidon I","1","15"],["Dusun Penidon I","1","16"],["Dusun Penidon I","1","17"],["Dusun Penidon I","1","18"],["Dusun Penidon II","2","1"],["Dusun Penidon II","2","2"],["Dusun Penidon II","2","3"],["Dusun Penidon II","2","4"],["Dusun Penidon II","2","5"],["Dusun Penidon II","2","6"],["Dusun Penidon II","2","7"],["Dusun Penidon II","2","8"],["Dusun Penidon II","2","9"],["Dusun Penidon II","3","1"],["Dusun Penidon II","3","2"],["Dusun Penidon II","3","3"],["Dusun Penidon II","3","4"],["Dusun Penidon II","3","5"],["Dusun Penidon II","3","6"],["Dusun Penidon II","3","7"],["Dusun Penidon II","3","8"],["Dusun Penidon II","3","9"],["Dusun Kuwu","4","1"],["Dusun Kuwu","4","2"],["Dusun Kuwu","4","3"],["Dusun Kuwu","4","4"],["Dusun Kuwu","4","5"],["Dusun Kuwu","4","6"],["Dusun Kuwu","4","7"]];
+desa["sembungrejo"] = [["Dsn. Sepat Galeh","1","1"],["Dsn. Sepat Galeh","1","2"],["Dsn. Sepat Galeh","1","3"],["Dsn. Sepat Galeh","1","4"],["Dsn. Sepat Galeh","1","5"],["Dsn. Sepat Galeh","1","6"],["Dsn. Banguran","2","1"],["Dsn. Banguran","2","2"],["Dsn. Banguran","2","3"],["Dsn. Banguran","2","4"],["Dsn. Banguran","2","5"],["Dsn. Banguran","2","6"],["Dsn. Banguran","3","1"],["Dsn. Banguran","3","2"],["Dsn. Banguran","3","3"],["Dsn. Banguran","3","4"],["Dsn. Banguran","3","5"]];
+desa["cangkring"]   = [["Dsn. Cangkring","1","1"],["Dsn. Cangkring","1","2"],["Dsn. Cangkring","1","3"],["Dsn. Cangkring","1","4"],["Dsn. Cangkring","1","5"],["Dsn. Cangkring","2","1"],["Dsn. Cangkring","2","2"],["Dsn. Cangkring","2","3"],["Dsn. Cangkring","2","4"],["Dsn. Cangkring","2","5"]];
+desa["kebomlati"]   = [["Dsn. Boan","1","1"],["Dsn. Boan","1","2"],["Dsn. Boan","1","3"],["Dsn. Boan","1","4"],["Dsn. Boan","1","5"],["Dsn. Boan","1","6"],["Dsn. Boan","1","7"],["Dsn. Mlaten","1","1"],["Dsn. Mlaten","1","2"],["Dsn. Mlaten","1","3"],["Dsn. Mlaten","1","4"],["Dsn. Mlaten","1","5"],["Dsn. Mlaten","1","6"],["Dsn. Ngeblek","1","1"],["Dsn. Ngeblek","1","2"],["Dsn. Ngeblek","1","3"],["Dsn. Ngeblek","1","4"],["Dsn. Ngeblek","1","5"]];
+desa["magersari"]   = [["Dusun Geger","1","1"],["Dusun Geger","1","2"],["Dusun Geger","1","3"],["Dusun Geger","1","4"],["Dusun Geger","2","5"],["Dusun Geger","2","6"],["Dusun Geger","2","7"],["Dusun Geger","2","8"],["Dusun Kajangan","3","1"],["Dusun Kajangan","3","2"],["Dusun Juwet","4","1"],["Dusun Juwet","4","2"],["Dusun Juwet","4","3"],["Dusun Juwet","4","4"],["Dusun Juwet","4","5"],["Dusun Juwet","4","6"],["Dusun Juwet","4","7"],["Dusun Juwet","5","1"],["Dusun Juwet","5","2"],["Dusun Juwet","5","3"],["Dusun Juwet","5","4"],["Dusun Mayang","8","1"],["Dusun Mayang","8","2"],["Dusun Mayang","8","3"],["Dusun Mayang","8","4"],["Dusun Pacar","10","1"],["Dusun Pacar","10","2"],["Dusun Pacar","10","3"]];
+desa["klotok"]      = [["Dusun Klotok","1","1"],["Dusun Klotok","1","2"],["Dusun Klotok","1","3"],["Dusun Klotok","1","4"],["Dusun Klotok","1","5"],["Dusun Klotok","1","6"],["Dusun Klotok","2","1"],["Dusun Klotok","2","2"],["Dusun Klotok","2","3"],["Dusun Klotok","2","4"],["Dusun Klotok","2","5"],["Dusun Klotok","3","1"],["Dusun Klotok","3","2"],["Dusun Klotok","3","3"],["Dusun Klotok","3","4"],["Dusun Klotok","3","5"],["Dusun Klotok","3","6"],["Dusun Lingit","1","1"],["Dusun Lingit","1","2"],["Dusun Lingit","1","3"],["Dusun Lingit","1","4"],["Dusun Lingit","1","5"],["Dusun Lingit","1","6"],["Dusun Lingit","2","1"],["Dusun Lingit","2","2"],["Dusun Lingit","2","3"],["Dusun Lingit","2","4"],["Dusun Lingit","2","5"],["Dusun Lingit","2","6"],["Dusun Dolok","1","1"],["Dusun Dolok","1","2"],["Dusun Dolok","1","3"],["Dusun Dolok","1","4"],["Dusun Dolok","1","5"],["Dusun Dolok","1","6"],["Dusun Dolok","2","1"],["Dusun Dolok","2","2"],["Dusun Dolok","2","3"],["Dusun Dolok","2","4"],["Dusun Dolok","2","5"],["Dusun Dolok","2","6"],["Dusun Landean","1","1"],["Dusun Landean","1","2"],["Dusun Landean","1","3"],["Dusun Landean","1","4"],["Dusun Landean","1","5"],["Dusun Landean","2","1"],["Dusun Landean","2","2"],["Dusun Landean","2","3"],["Dusun Landean","2","4"],["Dusun Landean","2","5"],["Dusun Landean","2","6"]];
+desa["plumpang"]    = [["Dusun Kunir","1","1"],["Dusun Plumpang","1","2"],["Dusun Tanggungan","1","3"]];
+desa["trutup"]      = [["Dusun Talun","1","1"],["Dusun Talun","1","2"],["Dusun Talun","1","3"],["Dusun Talun","2","1"],["Dusun Talun","2","2"],["Dusun Talun","2","3"],["Dusun Talun","3","1"],["Dusun Talun","3","2"],["Dusun Talun","3","3"],["Dusun Klaseman","4","1"],["Dusun Klaseman","4","2"],["Dusun Klaseman","4","3"],["Dusun Klaseman","5","1"],["Dusun Klaseman","5","2"],["Dusun Klaseman","5","3"],["Dusun Klaseman","6","1"],["Dusun Klaseman","6","2"],["Dusun Klaseman","6","3"]];
+
+// ═══════════════════════════════════════
+// UTILS
+// ═══════════════════════════════════════
+function generateRandom(min, max) {
+  let rand = Math.floor(Math.random() * (max - min)) + min;
+  return rand > 9 ? "" + rand : "0" + rand;
+}
+function toProperCase(val) {
+  return val.replace(/\w\S*/g, txt => txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase());
+}
+
+// ═══════════════════════════════════════
+// INIT
+// ═══════════════════════════════════════
+const tanggalInput = document.getElementById('tanggal');
+const today = new Date();
+const yyyy = today.getFullYear();
+const mm = String(today.getMonth() + 1).padStart(2, '0');
+const dd = String(today.getDate()).padStart(2, '0');
+tanggalInput.value = `${yyyy}-${mm}-${dd}`;
+
+document.getElementById('desa').addEventListener('change', ganti);
+document.getElementById('tanggal').addEventListener('change', ganti);
+
+let currentUraian = '';
+
+function ganti() {
+  const random_nama   = nama[Math.floor(Math.random() * nama.length)];
+  const random_kata   = kata[Math.floor(Math.random() * kata.length)].toLowerCase();
+  const desa_val      = document.getElementById('desa').value;
+  const desa_arr      = desa[desa_val];
+  const desa_rand     = desa_arr[Math.floor(Math.random() * desa_arr.length)];
+  const dusun         = desa_rand[0];
+  const rw            = desa_rand[1];
+  const rt            = desa_rand[2];
+  const pukul         = generateRandom(8, 16) + "." + generateRandom(0, 59);
+
+  const tanggalVal    = document.getElementById('tanggal').value;
+  const d             = new Date(tanggalVal + 'T00:00:00');
+  const hari          = seminggu[d.getDay()];
+  const tgl_indo      = d.toLocaleDateString('id-ID', { day:'numeric', month:'long', year:'numeric' });
+
+  const uraian = `Pada hari ${hari} (${tgl_indo}) Pukul ${pukul} WIB saya bertemu dengan Bpk. ${toProperCase(random_nama)} di Ds. ${toProperCase(desa_val)} Kec. Plumpang.\n\nBpk. ${toProperCase(random_nama)} ${random_kata}`;
+
+  currentUraian = uraian;
+
+  document.getElementById('nama').value = random_nama;
+  document.getElementById('hari').value = hari;
+  document.getElementById('pukul').value = pukul + " WIB";
+  document.getElementById('dusun').value = dusun;
+  document.getElementById('rt').value = rt;
+  document.getElementById('rw').value = rw;
+  document.getElementById('uraian-text').textContent = uraian;
+
+  // Animate button
+  const btn = document.getElementById('btn-ganti');
+  btn.style.transform = 'scale(0.95)';
+  setTimeout(() => btn.style.transform = '', 150);
+}
+
+// ═══════════════════════════════════════
+// COPY FUNCTIONS
+// ═══════════════════════════════════════
+function showToast(msg) {
+  const t = document.getElementById('toast');
+  t.textContent = '✓ ' + (msg || 'Disalin ke clipboard');
+  t.classList.add('show');
+  setTimeout(() => t.classList.remove('show'), 2000);
+}
+
+function copyField(el) {
+  navigator.clipboard.writeText(el.value).then(() => showToast(el.value));
+}
+
+function copyUraian() {
+  navigator.clipboard.writeText(currentUraian).then(() => showToast('Uraian disalin!'));
+}
+
+// ═══════════════════════════════════════
+// INIT ON LOAD
+// ═══════════════════════════════════════
+ganti();
+</script>
+</body>
+</html>
