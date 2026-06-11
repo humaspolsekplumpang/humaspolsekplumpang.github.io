@@ -536,14 +536,13 @@ function ganti() {
   const dusun         = desa_rand[0];
   const rw            = desa_rand[1];
   const rt            = desa_rand[2];
-  const pukul         = generateRandom(8, 16) + "." + generateRandom(0, 59);
 
   const tanggalVal    = document.getElementById('tanggal').value;
   const d             = new Date(tanggalVal + 'T00:00:00');
   const hari          = seminggu[d.getDay()];
   const tgl_indo      = d.toLocaleDateString('id-ID', { day:'numeric', month:'long', year:'numeric' });
 
-  const uraian = `Pada hari ${hari} (${tgl_indo}) Pukul ${pukul} WIB saya bertemu dengan Bpk. ${toProperCase(random_nama)} di Ds. ${toProperCase(desa_val)} Kec. Plumpang.\n\nBpk. ${toProperCase(random_nama)} ${random_kata}`;
+  const uraian = `Pada hari ${hari} (${tgl_indo}) saya bertemu dengan Bpk. ${toProperCase(random_nama)} di Ds. ${toProperCase(desa_val)} Kec. Plumpang.\n\nBpk. ${toProperCase(random_nama)} ${random_kata}`;
 
   currentUraian = uraian;
 
